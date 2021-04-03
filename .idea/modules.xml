@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/tomcat.iml" filepath="$PROJECT_DIR$/tomcat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tomcat7/tomcat-7.0.x.iml" filepath="$PROJECT_DIR$/tomcat7/tomcat-7.0.x.iml" />
+    </modules>
+  </component>
+</project>
