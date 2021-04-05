@@ -16,12 +16,6 @@
  */
 package org.apache.coyote.http11;
 
-import java.io.EOFException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.Socket;
-import java.nio.charset.Charset;
-
 import org.apache.coyote.InputBuffer;
 import org.apache.coyote.Request;
 import org.apache.juli.logging.Log;
@@ -31,6 +25,12 @@ import org.apache.tomcat.util.buf.MessageBytes;
 import org.apache.tomcat.util.http.parser.HttpParser;
 import org.apache.tomcat.util.net.AbstractEndpoint;
 import org.apache.tomcat.util.net.SocketWrapper;
+
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.Socket;
+import java.nio.charset.Charset;
 
 /**
  * Implementation of InputBuffer which provides HTTP request header parsing as
@@ -85,6 +85,10 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
      * read operations, or if the given buffer is not big enough to accommodate
      * the whole line.
      */
+
+    /**
+     * 解析请求行   GET /v1/internal/user HTTP/1.1
+     */
     @Override
     public boolean parseRequestLine(boolean useAvailableDataOnly)
 
@@ -97,10 +101,17 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
         //
 
         byte chr = 0;
+        /**
+         * 过滤GET之前的回车换行符
+         */
         do {
             // 把buf里面的字符一个个取出来进行判断，遇到非回车换行符则会退出
 
             // Read new bytes if needed
+            /**
+             *  pos = lastValid buf中的数据读完了
+             *  pos > lastValid 异常
+             */
             // 如果一直读到的回车换行符则再次调用fill,从inputStream里面读取数据填充到buf中
             if (pos >= lastValid) {
                 if (!fill())
@@ -114,6 +125,9 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
             chr = buf[pos++];
         } while ((chr == Constants.CR) || (chr == Constants.LF));
 
+        /**
+         * 上面的buf[pos++]中pos是先用后加 所以这里--
+         */
         pos--;
 
         // Mark the current buffer position
@@ -126,9 +140,17 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
 
         boolean space = false;
 
+
+        /**
+         * 找到空格或tab 说明找到GET了 (Get | Post ..)  退出循环
+         */
         while (!space) {
 
             // Read new bytes if needed
+            /**
+             *  pos = lastValid buf中的数据读完了
+             *  pos > lastValid 异常
+             */
             if (pos >= lastValid) {
                 if (!fill())
                     throw new EOFException(sm.getString("iib.eof.error"));
@@ -138,6 +160,7 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
             // also be tolerant of multiple SP and/or HT.
             if (buf[pos] == Constants.SP || buf[pos] == Constants.HT) {
                 space = true;
+                //设置字节  没有转换成String？ 1、效率（开发人员不一定需要用） 2、不用考虑编码
                 request.method().setBytes(buf, start, pos - start);
             } else if (!HttpParser.isToken(buf[pos])) {
                 throw new IllegalArgumentException(sm.getString("iib.invalidmethod"));
@@ -148,6 +171,9 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
         }
 
         // Spec says single SP but also be tolerant of multiple SP and/or HT
+        /**
+         * 过滤空格或tab
+         */
         while (space) {
             // Read new bytes if needed
             if (pos >= lastValid) {
@@ -172,6 +198,9 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
 
         boolean eol = false;
 
+        /**
+         * 解析uri /v1/internal/user
+         */
         while (!space) {
 
             // Read new bytes if needed
@@ -530,13 +559,14 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
 
         if (parsingHeader) {
 
+            //如果请求行 + 请求头的大小 > 8kb 抛异常
             // 如果还在解析请求头，lastValid表示当前解析数据的下标位置，如果该位置等于buf的长度了，表示请求头的数据超过buf了。
             if (lastValid == buf.length) {
                 throw new IllegalArgumentException
                     (sm.getString("iib.requestheadertoolarge.error"));
             }
 
-            // 从inputStream中读取数据，len表示要读取的数据长度，pos表示把从inputStream读到的数据放在buf的pos位置
+            // 从inputStream中读取数据（内核缓冲区到应用缓冲区），len表示要读取的数据长度，pos表示把从inputStream读到的数据放在buf的pos位置
             // nRead表示真实读取到的数据
             nRead = inputStream.read(buf, pos, buf.length - lastValid);
             if (nRead > 0) {

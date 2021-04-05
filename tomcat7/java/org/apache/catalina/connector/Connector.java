@@ -16,13 +16,6 @@
  */
 package org.apache.catalina.connector;
 
-import java.net.InetAddress;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-
-import javax.management.ObjectName;
-
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.LifecycleState;
 import org.apache.catalina.Service;
@@ -36,6 +29,12 @@ import org.apache.juli.logging.LogFactory;
 import org.apache.tomcat.util.IntrospectionUtils;
 import org.apache.tomcat.util.http.mapper.Mapper;
 import org.apache.tomcat.util.res.StringManager;
+
+import javax.management.ObjectName;
+import java.net.InetAddress;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 
 
 /**
@@ -606,7 +605,7 @@ public class Connector extends LifecycleMBeanBase  {
                 setProtocolHandlerClassName
                 ("org.apache.coyote.ajp.AjpProtocol");
             } else if (protocol != null) {
-                setProtocolHandlerClassName(protocol); // org.apache.coyote.http11NIOProxot
+                setProtocolHandlerClassName(protocol); //http协议 io模型是nio ==> org.apache.coyote.http11NIOProxot
             }
         }
 

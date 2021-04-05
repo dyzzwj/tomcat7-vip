@@ -16,35 +16,8 @@
  */
 package org.apache.coyote.http11;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InterruptedIOException;
-import java.io.StringReader;
-import java.net.Socket;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.coyote.AbstractProcessor;
-import org.apache.coyote.ActionCode;
-import org.apache.coyote.AsyncContextCallback;
-import org.apache.coyote.ErrorState;
-import org.apache.coyote.RequestInfo;
-import org.apache.coyote.http11.filters.BufferedInputFilter;
-import org.apache.coyote.http11.filters.ChunkedInputFilter;
-import org.apache.coyote.http11.filters.ChunkedOutputFilter;
-import org.apache.coyote.http11.filters.GzipOutputFilter;
-import org.apache.coyote.http11.filters.IdentityInputFilter;
-import org.apache.coyote.http11.filters.IdentityOutputFilter;
-import org.apache.coyote.http11.filters.SavedRequestInputFilter;
-import org.apache.coyote.http11.filters.VoidInputFilter;
-import org.apache.coyote.http11.filters.VoidOutputFilter;
+import org.apache.coyote.*;
+import org.apache.coyote.http11.filters.*;
 import org.apache.coyote.http11.upgrade.servlet31.HttpUpgradeHandler;
 import org.apache.tomcat.util.ExceptionUtils;
 import org.apache.tomcat.util.buf.Ascii;
@@ -61,6 +34,14 @@ import org.apache.tomcat.util.net.AbstractEndpoint.Handler.SocketState;
 import org.apache.tomcat.util.net.SocketStatus;
 import org.apache.tomcat.util.net.SocketWrapper;
 import org.apache.tomcat.util.res.StringManager;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InterruptedIOException;
+import java.io.StringReader;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Pattern;
 
 public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
 
@@ -1149,7 +1130,8 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
                 // Setting up filters, and parse some request headers
                 rp.setStage(org.apache.coyote.Constants.STAGE_PREPARE);  // 设置请求状态为预处理状态
                 try {
-                    prepareRequest();   // 预处理, 主要从请求中处理处keepAlive属性，以及进行一些验证，以及根据请求分析得到ActiveInputFilter
+                    // 预处理, 主要从请求中处理处keepAlive属性，以及进行一些验证，以及根据请求分析得到ActiveInputFilter
+                    prepareRequest();
                 } catch (Throwable t) {
                     ExceptionUtils.handleThrowable(t);
                     if (getLog().isDebugEnabled()) {

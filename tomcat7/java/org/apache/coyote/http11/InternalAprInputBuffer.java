@@ -16,12 +16,6 @@
  */
 package org.apache.coyote.http11;
 
-import java.io.EOFException;
-import java.io.IOException;
-import java.net.SocketTimeoutException;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
-
 import org.apache.coyote.InputBuffer;
 import org.apache.coyote.Request;
 import org.apache.juli.logging.Log;
@@ -33,6 +27,12 @@ import org.apache.tomcat.util.buf.MessageBytes;
 import org.apache.tomcat.util.http.parser.HttpParser;
 import org.apache.tomcat.util.net.AbstractEndpoint;
 import org.apache.tomcat.util.net.SocketWrapper;
+
+import java.io.EOFException;
+import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 
 /**
  * Implementation of InputBuffer which provides HTTP request header parsing as
@@ -331,6 +331,7 @@ public class InternalAprInputBuffer extends AbstractInputBuffer<Long> {
         }
 
         parsingHeader = false;
+        //buf中可能包含请求头和请求体的数据  end记录请求头的结束位置  也是请求体的开始位置
         end = pos;
         return true;
     }
