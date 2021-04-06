@@ -17,14 +17,14 @@
 
 package org.apache.coyote.http11.filters;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-
 import org.apache.coyote.InputBuffer;
 import org.apache.coyote.Request;
 import org.apache.coyote.http11.InputFilter;
 import org.apache.tomcat.util.buf.ByteChunk;
 import org.apache.tomcat.util.res.StringManager;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
 
 /**
  * Identity input filter.
@@ -194,7 +194,7 @@ public class IdentityInputFilter implements InputFilter {
         final boolean maxSwallowSizeExceeded = (maxSwallowSize > -1 && remaining > maxSwallowSize);
         long swallowed = 0;
 
-        // remaining==contentlengt
+        // remaining初始值为contentLength
         // Consume extra bytes.
         // 还有剩余数据
         while (remaining > 0) {

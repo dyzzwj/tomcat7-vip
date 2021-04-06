@@ -161,6 +161,18 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
             if (buf[pos] == Constants.SP || buf[pos] == Constants.HT) {
                 space = true;
                 //设置字节  没有转换成String？ 1、效率（开发人员不一定需要用） 2、不用考虑编码
+                /**
+                 *  设置请求方法（以字节的形式保存 并没有转换成String）
+                 *  ByteChunk:字节块
+                 *  buf：源字节数组
+                 *  start:buf的下标为start表示ByteChunk中数据的开始位置
+                 *  end:buf的下标为end表示ByteChunk中数据的结束位置
+                 *
+                 *  注意 并没有把buf中的数据拷贝到ByteChunk 而是ByteChunk保存了InputBuffer中buf的引用,
+                 *  并使用start、end记录当前ByteChunk的数据在buf中的起始集合结束为止
+                 *  在真正调用RequestFacade.getMethod()方法时 才会把 coyote.Request.method()的字节数据转换为String
+                 *  即取InputBuffer中buf下标为start和end的部分 转为String
+                 */
                 request.method().setBytes(buf, start, pos - start);
             } else if (!HttpParser.isToken(buf[pos])) {
                 throw new IllegalArgumentException(sm.getString("iib.invalidmethod"));
