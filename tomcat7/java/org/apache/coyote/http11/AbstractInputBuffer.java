@@ -240,7 +240,9 @@ public abstract class AbstractInputBuffer<S> implements InputBuffer{
             System.arraycopy(buf, pos, buf, 0, lastValid - pos);
         }
         // Always reset pos to zero
-        // 把lastValid和pos重置为正确的位置
+        // 把lastValid和pos重置为正确的位置  把pos重置到inputBuffer的起始位置 重用inputBuffer
+        //同时 上面的copy把属于当前请求的数据也放到inputBuffer的起始位置（处理上一个请求时多读取了）
+        //每次处理一个新的请求  pos都是从inputBuffer的0（起始位置）开始
         lastValid = lastValid - pos;
         pos = 0;
 

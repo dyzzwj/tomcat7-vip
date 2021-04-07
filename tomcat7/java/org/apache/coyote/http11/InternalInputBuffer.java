@@ -621,7 +621,10 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
 
 
         /**
-         * Read bytes into the specified chunk.
+         * InputBuffer会从操作系统的RecvBuf中读取数据 fill()方法
+         * 从InputBuffer中读取剩余数据到ByteChunk(实际上标记)，使用ByteChunk标记buffer中的剩余数据（pos到lastValid）
+         * 此时buffer中的数据被读完了(pos 等于 lastValid) 此时就可以根据ByteChunk读取buffer中的数据
+         * nRead表示读到了多少了数据
          */
         @Override
         public int doRead(ByteChunk chunk, Request req )
@@ -637,6 +640,7 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
             chunk.setBytes(buf, pos, length);
             // 因为这里是读取请求体，在解析请求行，请求头时，pos是每解析一个字符就移动一下，
             // 而这里不一样，这里只是负责把请求体的数据读出来即可，对于tomcat来说并不用这部分数据，所以直接把pos移动到lastValid位置
+            //表示InputBuffer的数据被读完了
             pos = lastValid;
 
 

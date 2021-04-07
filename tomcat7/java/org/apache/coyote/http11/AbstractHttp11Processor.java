@@ -1158,7 +1158,14 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
             if (!getErrorState().isError()) {
                 try {
                     rp.setStage(org.apache.coyote.Constants.STAGE_SERVICE); // 设置请求的状态为服务状态，表示正在处理请求
-                    adapter.service(request, response); // 交给容器处理请求
+
+                    /**
+                     *  把请求继续交给容器处理
+                     */
+                    adapter.service(request, response);
+
+                    //请求处理完毕
+
                     // Handle when the response was committed before a serious
                     // error occurred.  Throwing a ServletException should both
                     // set the status to 500 and set the errorException.
@@ -1210,7 +1217,9 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
                     // to be closed occurred.
                     checkExpectationAndResponseStatus();
                 }
-                // 当前http请求已经处理完了，做一些收尾工作
+                /**
+                 * 当前http请求已经处理完了，做一些收尾工作
+                 */
                 endRequest();
             }
 
@@ -1225,7 +1234,9 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
 
             if (!isAsync() && !comet || getErrorState().isError()) {
                 if (getErrorState().isIoAllowed()) {
-                    // 准备处理下一个请求
+                    /**
+                     * 准备处理下一个请求
+                     */
                     getInputBuffer().nextRequest();
                     getOutputBuffer().nextRequest();
                 }
