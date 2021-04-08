@@ -16,8 +16,6 @@
  */
 package org.apache.coyote.http11;
 
-import java.io.IOException;
-
 import org.apache.coyote.InputBuffer;
 import org.apache.coyote.Request;
 import org.apache.tomcat.util.buf.ByteChunk;
@@ -26,6 +24,8 @@ import org.apache.tomcat.util.http.parser.HttpParser;
 import org.apache.tomcat.util.net.AbstractEndpoint;
 import org.apache.tomcat.util.net.SocketWrapper;
 import org.apache.tomcat.util.res.StringManager;
+
+import java.io.IOException;
 
 public abstract class AbstractInputBuffer<S> implements InputBuffer{
 
@@ -240,7 +240,9 @@ public abstract class AbstractInputBuffer<S> implements InputBuffer{
             System.arraycopy(buf, pos, buf, 0, lastValid - pos);
         }
         // Always reset pos to zero
-        // 把lastValid和pos重置为正确的位置
+        // 把lastValid和pos重置为正确的位置  把pos重置到inputBuffer的起始位置 重用inputBuffer
+        //同时 上面的copy把属于当前请求的数据也放到inputBuffer的起始位置（处理上一个请求时多读取了）
+        //每次处理一个新的请求  pos都是从inputBuffer的0（起始位置）开始
         lastValid = lastValid - pos;
         pos = 0;
 
@@ -265,6 +267,10 @@ public abstract class AbstractInputBuffer<S> implements InputBuffer{
 
         if (swallowInput && (lastActiveFilter != -1)) {
             // 多度的数据
+            /**
+             * 分块传输 ： IdentityInputFilter.
+             * contentLength : IdentityInputFilter
+             */
             int extraBytes = (int) activeFilters[lastActiveFilter].end();
             pos = pos - extraBytes; // 把pos向前移动
         }

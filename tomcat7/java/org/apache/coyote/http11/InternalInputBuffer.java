@@ -161,6 +161,18 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
             if (buf[pos] == Constants.SP || buf[pos] == Constants.HT) {
                 space = true;
                 //设置字节  没有转换成String？ 1、效率（开发人员不一定需要用） 2、不用考虑编码
+                /**
+                 *  设置请求方法（以字节的形式保存 并没有转换成String）
+                 *  ByteChunk:字节块
+                 *  buf：源字节数组
+                 *  start:buf的下标为start表示ByteChunk中数据的开始位置
+                 *  end:buf的下标为end表示ByteChunk中数据的结束位置
+                 *
+                 *  注意 并没有把buf中的数据拷贝到ByteChunk 而是ByteChunk保存了InputBuffer中buf的引用,
+                 *  并使用start、end记录当前ByteChunk的数据在buf中的起始集合结束为止
+                 *  在真正调用RequestFacade.getMethod()方法时 才会把 coyote.Request.method()的字节数据转换为String
+                 *  即取InputBuffer中buf下标为start和end的部分 转为String
+                 */
                 request.method().setBytes(buf, start, pos - start);
             } else if (!HttpParser.isToken(buf[pos])) {
                 throw new IllegalArgumentException(sm.getString("iib.invalidmethod"));
@@ -609,7 +621,10 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
 
 
         /**
-         * Read bytes into the specified chunk.
+         * InputBuffer会从操作系统的RecvBuf中读取数据 fill()方法
+         * 从InputBuffer中读取剩余数据到ByteChunk(实际上标记)，使用ByteChunk标记buffer中的剩余数据（pos到lastValid）
+         * 此时buffer中的数据被读完了(pos 等于 lastValid) 此时就可以根据ByteChunk读取buffer中的数据
+         * nRead表示读到了多少了数据
          */
         @Override
         public int doRead(ByteChunk chunk, Request req )
@@ -625,6 +640,7 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
             chunk.setBytes(buf, pos, length);
             // 因为这里是读取请求体，在解析请求行，请求头时，pos是每解析一个字符就移动一下，
             // 而这里不一样，这里只是负责把请求体的数据读出来即可，对于tomcat来说并不用这部分数据，所以直接把pos移动到lastValid位置
+            //表示InputBuffer的数据被读完了
             pos = lastValid;
 
 

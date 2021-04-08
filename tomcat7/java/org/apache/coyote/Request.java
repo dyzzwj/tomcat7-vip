@@ -16,9 +16,6 @@
  */
 package org.apache.coyote;
 
-import java.io.IOException;
-import java.util.HashMap;
-
 import org.apache.tomcat.util.buf.ByteChunk;
 import org.apache.tomcat.util.buf.MessageBytes;
 import org.apache.tomcat.util.buf.UDecoder;
@@ -26,6 +23,9 @@ import org.apache.tomcat.util.http.ContentType;
 import org.apache.tomcat.util.http.Cookies;
 import org.apache.tomcat.util.http.MimeHeaders;
 import org.apache.tomcat.util.http.Parameters;
+
+import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * This is a low-level, efficient representation of a server request. Most
@@ -440,7 +440,7 @@ public final class Request {
     public int doRead(ByteChunk chunk)
         throws IOException {
 
-        // 从InputStreamInputBuffer中读取数据，其实是标记，这里首先进入AbstractInputBuffer中的doRead方法
+        // 首先进入AbstractInputBuffer中的doRead方法 然后从InputStreamInputBuffer中读取数据，其实是标记
         int n = inputBuffer.doRead(chunk, this);
         if (n > 0) {
             bytesRead+=n;

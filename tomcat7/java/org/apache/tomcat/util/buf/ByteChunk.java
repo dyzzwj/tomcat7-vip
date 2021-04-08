@@ -412,8 +412,19 @@ public final class ByteChunk extends AbstractChunk {
     }
 
 
+    /**
+     * 从byteChunk中读取从下表0开始 长度为len的数据到dest中
+     *  刚开始ByteChunk中是没有数据的  只有调用了request.getInputStream().read(byte[])方法
+     *  才会触发读取操作系统缓存的数据到ByteChunk中
+     *  虽然开发人员只需要读取len长的数据到dest 但tomcat会把ByteChunk装满
+     *  下次再调用request.getInputStream().read(byte[]) 就可以直接从ByteChunk中读取（赋值）
+     *
+     */
     public int substract(byte dest[], int off, int len) throws IOException {
-        // 这里会对当前ByteChunk初始化
+        /**
+         * 这里会对当前ByteChunk初始化
+         * 如果ByteChunk中的数据读完了 就从操作系统缓存中读数据到ChunkBuffer
+         */
         if (checkEof()) {
             return -1;
         }
@@ -431,11 +442,21 @@ public final class ByteChunk extends AbstractChunk {
 
     private boolean checkEof() throws IOException {
         if ((end - start) == 0) {
+            /**
+             * start 到 end之间为可读取的数据
+             * 如果end-start ==0 表示ByteChunk的数据读完了
+             */
+
             // 如果bytechunk没有标记数据了，则开始比较
             if (in == null) {
                 return true;
             }
-            // 从in中读取buff长度大小的数据，读到buff中，真实读到的数据为n
+            /**
+             * 从in中读取buff长度大小的数据，读到buff中，真实读到的数据为n
+             * 1、要么把ByteChunk装满
+             * 2、要么把inputBuffer的数据读完
+             *
+             */
             int n = in.realReadBytes(buff, 0, buff.length);
             if (n < 0) {
                 return true;
