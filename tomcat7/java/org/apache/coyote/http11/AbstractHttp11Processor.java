@@ -1130,7 +1130,9 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
                 // Setting up filters, and parse some request headers
                 rp.setStage(org.apache.coyote.Constants.STAGE_PREPARE);  // 设置请求状态为预处理状态
                 try {
-                    // 预处理, 主要从请求中处理处keepAlive属性，以及进行一些验证，以及根据请求分析得到ActiveInputFilter
+                    /**
+                     * 预处理, 主要从请求中处理处keepAlive属性，以及进行一些验证，以及根据请求分析得到ActiveInputFilter
+                     */
                     prepareRequest();
                 } catch (Throwable t) {
                     ExceptionUtils.handleThrowable(t);
@@ -1354,6 +1356,9 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
         }
 
         MessageBytes methodMB = request.method();
+        /**
+         * 提前将metho由字节转为String
+         */
         if (methodMB.equals(Constants.GET)) {
             methodMB.setString(Constants.GET);
         } else if (methodMB.equals(Constants.POST)) {
@@ -1524,8 +1529,11 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
             }
         }
 
-        // Input filter setup
-        // 获取处理请求体的Tomcat默认的InputFilter,默认4个Input的
+        /**
+         * 获取处理请求体的Tomcat默认的InputFilter,默认4个Input的
+         *  在initializeFilters中初始化
+         *
+         */
         InputFilter[] inputFilters = getInputBuffer().getFilters();
 
         // 每个InputFilter都有一个ENCODING_NAME
@@ -1543,6 +1551,9 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
             // 请求中设置了多个ENCODING_NAME
             while (commaPos != -1) {
                 encodingName = transferEncodingValue.substring(startPos, commaPos);
+                /**
+                 *  根据transfer-encoding添加chunked filter   分块传输
+                 */
                 addInputFilter(inputFilters, encodingName);
                 startPos = commaPos + 1;
                 commaPos = transferEncodingValue.indexOf(',', startPos);
@@ -1551,8 +1562,9 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
             addInputFilter(inputFilters, encodingName);
         }
 
-        // Parse content-length header
-        // inputFilters提交跟contextlength相关的IDENTITY_FILTER
+        /**
+         * inputFilters提交跟contextlength相关的IDENTITY_FILTER
+         */
         long contentLength = -1;
         try {
             contentLength = request.getContentLengthLong();
@@ -1582,7 +1594,7 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
         // 解析hostname和port
         parseHost(hostValueMB);
 
-        // 即没有content-length请求头，也没有transfer-encoding请求头，那么用VOID_FILTER来处理请求体，其实就是不处理请求体
+        // 既没有content-length请求头，也没有transfer-encoding请求头，那么用VOID_FILTER来处理请求体，其实就是不处理请求体
         if (!contentDelimitation) {
             // If there's no content length
             // (broken HTTP/1.0 or HTTP/1.1), assume
