@@ -599,6 +599,12 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
                 return SocketState.CLOSED;
             }
 
+            /**
+             *  每个连接(socket)对应一个Processor
+             *  因为nio是非阻塞的 对于一个socket,调用一次Processor#process()不一定能读完数据（可能只读到了部分数据）
+             *  如果是bio，调用一次Processor#process()一定能读完数据（阻塞的读）
+             *  所以需要记录socket和processor的关系
+             */
             Processor<S> processor = connections.get(socket);
             if (status == SocketStatus.DISCONNECT && processor == null) {
                 // Nothing to do. Endpoint requested a close and there is no
@@ -682,6 +688,9 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
                         // Mark the connection as upgraded
                         wrapper.setUpgraded(true);
                         // Associate with the processor with the connection
+                        /**
+                         * 关联Processor和socket
+                         */
                         connections.put(socket, processor);
                         // Initialise the upgrade handler (which may trigger
                         // some IO using the new protocol which is why the lines

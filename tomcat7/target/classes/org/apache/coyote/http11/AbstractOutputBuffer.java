@@ -194,6 +194,9 @@ public abstract class AbstractOutputBuffer<S> implements OutputBuffer{
         if (lastActiveFilter == -1)
             return outputStreamOutputBuffer.doWrite(chunk, res);
         else
+
+            //contentLength -> IdentityOutputFilter.doWrite
+            //chunked -> ChunkedOutputFilter.doWrite
             return activeFilters[lastActiveFilter].doWrite(chunk, res);
 
     }

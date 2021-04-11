@@ -16,9 +16,6 @@
  */
 package org.apache.coyote.http11;
 
-import java.io.IOException;
-import java.net.Socket;
-
 import org.apache.coyote.AbstractProtocol;
 import org.apache.coyote.Processor;
 import org.apache.coyote.http11.upgrade.BioProcessor;
@@ -29,6 +26,9 @@ import org.apache.tomcat.util.net.JIoEndpoint;
 import org.apache.tomcat.util.net.JIoEndpoint.Handler;
 import org.apache.tomcat.util.net.SSLImplementation;
 import org.apache.tomcat.util.net.SocketWrapper;
+
+import java.io.IOException;
+import java.net.Socket;
 
 
 /**
@@ -59,6 +59,7 @@ public class Http11Protocol extends AbstractHttp11JsseProtocol<Socket> {
 
 
     public Http11Protocol() {
+        //bio端点
         endpoint = new JIoEndpoint();
         cHandler = new Http11ConnectionHandler(this);
         ((JIoEndpoint) endpoint).setHandler(cHandler);
@@ -169,6 +170,7 @@ public class Http11Protocol extends AbstractHttp11JsseProtocol<Socket> {
                     proto.getMaxSwallowSize(), proto.getRelaxedPathChars(),
                     proto.getRelaxedQueryChars());
             processor.setAdapter(proto.adapter);
+            //一个长连接最多处理的请求数
             processor.setMaxKeepAliveRequests(proto.getMaxKeepAliveRequests());
             processor.setKeepAliveTimeout(proto.getKeepAliveTimeout());
             processor.setConnectionUploadTimeout(

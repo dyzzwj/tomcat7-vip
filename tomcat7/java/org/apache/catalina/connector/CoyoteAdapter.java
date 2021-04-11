@@ -499,7 +499,9 @@ public class CoyoteAdapter implements Adapter {
             } else if (!comet) {
                 try {
                     request.finishRequest();
-                    // 在这里会上层缓冲区
+                    /** 如果缓冲区一直没被填满并且没有调用flush()方法
+                     * 在这里会上层缓冲区
+                     */
                     response.finishResponse();
                 } finally {
                     if (postParseSuccess) {

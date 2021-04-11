@@ -276,7 +276,7 @@ public class OutputBuffer extends Writer
      * @throws IOException An underlying IOException occurred
      */
     @Override
-    public void close()
+    public void  close()
         throws IOException {
 
         if (closed) {
@@ -292,8 +292,12 @@ public class OutputBuffer extends Writer
             cb.flushBuffer();
         }
 
-        // 如果没有发送过数据，则设置contentlength
-        // 如果之前发送过数据，那么响应头中就不会有contentlength了，应该这种情况数据是分块发送的了
+        /**
+         *   - 如果没有发送过数据到socket的send buff（即响应体数据都被上层缓冲区和底层缓冲区 缓存了并且没有flush()），则设置contentlength
+         *   - 如果之前发送过数据到socket的send buff（1、发送响应体较大 上层缓冲和底层缓冲装不下 2、只要调用了flush），
+         *   那么响应头中就不会有contentlength了，这种情况数据是分块发送的了
+         */
+        //
         if ((!coyoteResponse.isCommitted()) && (coyoteResponse.getContentLengthLong() == -1) &&
                 !coyoteResponse.getRequest().method().equals("HEAD")) {
             // If this didn't cause a commit of the response, the final content
@@ -310,7 +314,10 @@ public class OutputBuffer extends Writer
                 HttpServletResponse.SC_SWITCHING_PROTOCOLS) {
             doFlush(true);
         } else {
-            // realFlush为false, 所以并不会真正把数据发送给socket, 而只是把上层缓冲区的数据发送给下层缓冲区
+            /**
+             *  realFlush为false, 所以并不会真正把数据发送给socket, 而只是把上层缓冲区的数据发送给下层缓冲区
+             *  (如果没有启用下层缓冲区，则直接发送到socket sendbuff)
+             */
             doFlush(false);
         }
         closed = true;
@@ -354,6 +361,10 @@ public class OutputBuffer extends Writer
             doFlush = true;
             if (initial) {
                 // 先发送请求头，再发送请求体
+                /**
+                 *  构造响应头并把响应头的数据写入到InternalOutputBuffer中
+                 *  决定使用contentLength和chunked分块传输
+                 */
                 coyoteResponse.sendHeaders();
                 initial = false;
             }
@@ -440,7 +451,8 @@ public class OutputBuffer extends Writer
             return;
         }
 
-        // 将数据先写入ByteChunk的缓冲区中, 如果缓冲区满了，可能会把数据发送出去
+        // 将数据先写入ByteChunk的缓冲区中, 如果缓冲区满了，直接把数据写入到socketBuffer
+        //ByteChunk
         bb.append(b, off, len);
         bytesWritten += len;
 

@@ -215,11 +215,14 @@ public class InternalNioInputBuffer extends AbstractInputBuffer<NioChannel> {
 
         //check state
         if ( !parsingRequestLine ) return true;
-        //
-        // Skipping blank lines
-        //
+        /**
+         * 跳过请求行前面的空行
+         */
         if ( parsingRequestLinePhase == 0 ) {
             byte chr = 0;
+
+            //退出循环的条件
+            //1、socket的recv buff数据读前了  或   2、遇到非空行的数据
             do {
 
                 // Read new bytes if needed
@@ -229,7 +232,9 @@ public class InternalNioInputBuffer extends AbstractInputBuffer<NioChannel> {
                         return false;
                     }
                     // Do a simple read with a short timeout
-                    // 把channel中的数据读到buf中，如果没有读到则会返回false
+                    /**
+                     * 把channel中的数据读到buf中，如果没有读到则会返回false(不会阻塞 区别于bio)
+                     */
                     if (!fill(true, false)) {
                         return false;
                     }
@@ -453,6 +458,7 @@ public class InternalNioInputBuffer extends AbstractInputBuffer<NioChannel> {
             nRead = socket.read(socket.getBufHandler().getReadBuffer());
         }
         if (nRead > 0) {
+            //如果读到数据了
             socket.getBufHandler().getReadBuffer().flip();
             socket.getBufHandler().getReadBuffer().limit(nRead);
             expand(nRead + pos);
@@ -464,6 +470,7 @@ public class InternalNioInputBuffer extends AbstractInputBuffer<NioChannel> {
             //return false;
             throw new EOFException(sm.getString("iib.eof.error"));
         } else {
+            //如果没有读到数据
             return 0;
         }
     }
@@ -812,7 +819,9 @@ public class InternalNioInputBuffer extends AbstractInputBuffer<NioChannel> {
                     (sm.getString("iib.requestheadertoolarge.error"));
             }
 
-            // Do a simple read with a short timeout
+            /**
+             * 返回读到数据的长度  没有读到数据返回0
+             */
             read = readSocket(timeout,block)>0;
         } else {
             lastValid = pos = end;

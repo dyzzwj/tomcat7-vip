@@ -213,7 +213,7 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
 
                 try {
                     //if we have reached max connections, wait
-                    //达到了最大连接数限制则等待
+                    //达到了最大连接数限制则等待  基于aqs实现
                     countUpOrAwaitConnection();
 
                     Socket socket = null;  // bio，nio
@@ -451,8 +451,19 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
                 createExecutor();
             }
 
+
+
+            /**
+             *  初始化连接锁  限制连接数量
+             *  bio 一个连接对应一个线程
+             *  - nio是10000
+             *  - bio是线程池的最大线程数 默认为200 bio在JioEndPoint的构造方法中设置为0 在bind()时会改成线程池的最大线程数
+             */
             initializeConnectionLatch();
 
+            /**
+             * 启动接受连接的线程
+             */
             startAcceptorThreads();
 
             // Start async timeout thread

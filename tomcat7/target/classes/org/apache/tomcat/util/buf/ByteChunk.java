@@ -325,12 +325,15 @@ public final class ByteChunk extends AbstractChunk {
         // and avoid an extra copy
         // 如果要添加到缓冲区中的数据大小正好等于最大限制，并且缓冲区是空的，那么则直接把数据发送给out，不要存在缓冲区中了
         if (optimizedWrite && len == limit && end == start && out != null) {
+            //写到OutputBuffer.realWriteBytes
+            //InternalOutputBuffer.realWriteBytes
             out.realWriteBytes(src, off, len);
             return;
         }
 
         // if we are below the limit
         // 如果要发送的数据长度小于缓冲区中剩余空间，则把数据填充到剩余空间
+        //makeSpace()方法中保证了 buff.length要么是limit 要么buff.length - end >= len
         if (len <= limit - end) {
             System.arraycopy(src, off, buff, end, len);
             end += len;
@@ -358,9 +361,11 @@ public final class ByteChunk extends AbstractChunk {
         // 还剩下一部分数据没有放到缓冲区中的
         int remain = len - avail;
 
-        // 如果剩下的数据 超过 缓冲区剩余大小,那么就把数据直接发送出去
+        // 如果剩下的数据 超过 缓冲区剩余大小,那么就把数据直接发送到socketBuffer
         while (remain > (limit - end)) {
+            //此时就没有复制到当前ByteChunk的buff中
             out.realWriteBytes(src, (off + len) - remain, limit - end);
+            //更新剩下的数据
             remain = remain - (limit - end);
         }
 
@@ -412,8 +417,19 @@ public final class ByteChunk extends AbstractChunk {
     }
 
 
+    /**
+     * 从byteChunk中读取从下表0开始 长度为len的数据到dest中
+     *  刚开始ByteChunk中是没有数据的  只有调用了request.getInputStream().read(byte[])方法
+     *  才会触发读取操作系统缓存的数据到ByteChunk中
+     *  虽然开发人员只需要读取len长的数据到dest 但tomcat会把ByteChunk装满
+     *  下次再调用request.getInputStream().read(byte[]) 就可以直接从ByteChunk中读取（赋值）
+     *
+     */
     public int substract(byte dest[], int off, int len) throws IOException {
-        // 这里会对当前ByteChunk初始化
+        /**
+         * 这里会对当前ByteChunk初始化
+         * 如果ByteChunk中的数据读完了 就从操作系统缓存中读数据到ChunkBuffer
+         */
         if (checkEof()) {
             return -1;
         }
@@ -431,11 +447,21 @@ public final class ByteChunk extends AbstractChunk {
 
     private boolean checkEof() throws IOException {
         if ((end - start) == 0) {
+            /**
+             * start 到 end之间为可读取的数据
+             * 如果end-start ==0 表示ByteChunk的数据读完了
+             */
+
             // 如果bytechunk没有标记数据了，则开始比较
             if (in == null) {
                 return true;
             }
-            // 从in中读取buff长度大小的数据，读到buff中，真实读到的数据为n
+            /**
+             * 从in中读取buff长度大小的数据，读到buff中，真实读到的数据为n
+             * 1、要么把ByteChunk装满
+             * 2、要么把inputBuffer的数据读完
+             *
+             */
             int n = in.realReadBytes(buff, 0, buff.length);
             if (n < 0) {
                 return true;
@@ -456,6 +482,8 @@ public final class ByteChunk extends AbstractChunk {
         if (out == null) {
             throw new IOException("Buffer overflow, no sink " + getLimit() + " " + buff.length);
         }
+        //OutputBuffer.realWriteBytes
+        //InternalOutputBuffer.realWriteBytes
         out.realWriteBytes(buff, start, end - start);
         end = start;
     }
@@ -478,7 +506,8 @@ public final class ByteChunk extends AbstractChunk {
         long desiredSize = end + count;
 
         // Can't grow above the limit
-        // 如果超过限制了，那就只能开辟limit大小的缓冲区了
+        // 如果超过限制了，那就只能开辟limit大小的缓冲区了 当前数组的长度足够容纳
+        //len <= limit - end
         if (desiredSize > limit) {
             desiredSize = limit;
         }

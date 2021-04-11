@@ -814,6 +814,7 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
         case CLOSE: {
             // End the processing of the current request
             try {
+                //InternalOutputBuffer.endRequest
                 getOutputBuffer().endRequest();
             } catch (IOException e) {
                 setErrorState(ErrorState.CLOSE_NOW, e);
@@ -828,8 +829,13 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
 
             // Validate and write response headers
             try {
-                prepareResponse(); // 把响应头的数据写入到InternalOutputBuffer中
-                getOutputBuffer().commit(); // 将InternalOutputBuffer中的数据发送给socket
+                /**
+                 *  构造响应头并把响应头的数据写入到InternalOutputBuffer中
+                 *  决定使用contentLength和chunked分块传输
+                 */
+                prepareResponse();
+                //// 将InternalOutputBuffer中的数据发送给socket
+                getOutputBuffer().commit();
             } catch (IOException e) {
                 setErrorState(ErrorState.CLOSE_NOW, e);
             }

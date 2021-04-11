@@ -568,9 +568,10 @@ public abstract class AbstractEndpoint<S> {
     public void createExecutor() {
         // 是否使用的是内部默认的线程池
         internalExecutor = true;
+
         TaskQueue taskqueue = new TaskQueue();
         TaskThreadFactory tf = new TaskThreadFactory(getName() + "-exec-", daemon, getThreadPriority());
-        // 默认的线程数量为10, max200
+        // 默认的线程数量为h核心线程数10, 最大线程数200
         executor = new ThreadPoolExecutor(getMinSpareThreads(), getMaxThreads(), 60, TimeUnit.SECONDS,taskqueue, tf);
         taskqueue.setParent( (ThreadPoolExecutor) executor);
     }
@@ -845,6 +846,9 @@ public abstract class AbstractEndpoint<S> {
     protected LimitLatch initializeConnectionLatch() {
         if (maxConnections==-1) return null;
         if (connectionLimitLatch==null) {
+            /**
+             * etMaxConnections:10000 只对nio是10000 bio在JioEndPoint的构造方法中设置为0 在bind()时会改成线程池的最大线程数
+             */
             connectionLimitLatch = new LimitLatch(getMaxConnections());
         }
         return connectionLimitLatch;

@@ -564,6 +564,10 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
         return fill(true);
     }
 
+
+    /**
+     * bio 阻塞的
+     */
     @Override
     protected boolean fill(boolean block) throws IOException {
 
@@ -578,6 +582,7 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
                     (sm.getString("iib.requestheadertoolarge.error"));
             }
 
+            //阻塞的
             // 从inputStream中读取数据（内核缓冲区到应用缓冲区），len表示要读取的数据长度，pos表示把从inputStream读到的数据放在buf的pos位置
             // nRead表示真实读取到的数据
             nRead = inputStream.read(buf, pos, buf.length - lastValid);

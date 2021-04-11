@@ -16,14 +16,13 @@
  */
 package org.apache.catalina.connector;
 
+import org.apache.catalina.security.SecurityUtil;
+
+import javax.servlet.ServletInputStream;
 import java.io.IOException;
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
-
-import javax.servlet.ServletInputStream;
-
-import org.apache.catalina.security.SecurityUtil;
 
 /**
  * This class handles reading bytes.
@@ -165,6 +164,7 @@ public class CoyoteInputStream
                 }
             }
         } else {
+            //从lb中offset为0的位置开始 读取b.length个长度的数据到b中
             return ib.read(b, 0, b.length);
          }
     }
