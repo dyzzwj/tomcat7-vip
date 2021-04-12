@@ -435,6 +435,7 @@ public class InternalNioInputBuffer extends AbstractInputBuffer<NioChannel> {
         if ( block ) {
             Selector selector = null;
             try {
+
                 selector = pool.get();
             } catch ( IOException x ) {
                 // Ignore
@@ -462,7 +463,7 @@ public class InternalNioInputBuffer extends AbstractInputBuffer<NioChannel> {
             socket.getBufHandler().getReadBuffer().flip();
             socket.getBufHandler().getReadBuffer().limit(nRead);
             expand(nRead + pos);
-            // 把readBuffer中的数据转移到buf中
+            // 把readBuffer(nio的buffer)中的数据转移到buf(tomcat的buffer)中
             socket.getBufHandler().getReadBuffer().get(buf, pos, nRead);
             lastValid = pos + nRead;
             return nRead;
@@ -813,17 +814,19 @@ public class InternalNioInputBuffer extends AbstractInputBuffer<NioChannel> {
         boolean read = false;
 
         if (parsingHeader) {
-
+            //请求行、请求头
             if (lastValid > headerBufferSize) {
                 throw new IllegalArgumentException
                     (sm.getString("iib.requestheadertoolarge.error"));
             }
 
             /**
-             * 返回读到数据的长度  没有读到数据返回0
+             * 返回读到数据的长度  没有读到数据返回0 最终返回false
              */
             read = readSocket(timeout,block)>0;
         } else {
+            //请求体
+
             lastValid = pos = end;
             // Do a simple read with a short timeout
             read = readSocket(timeout, block)>0;
