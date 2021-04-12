@@ -19,19 +19,6 @@
 package org.apache.catalina.core;
 
 
-import java.io.IOException;
-import java.security.Principal;
-import java.security.PrivilegedActionException;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.Servlet;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.catalina.Globals;
 import org.apache.catalina.InstanceEvent;
 import org.apache.catalina.comet.CometEvent;
@@ -42,6 +29,13 @@ import org.apache.catalina.security.SecurityUtil;
 import org.apache.catalina.util.InstanceSupport;
 import org.apache.tomcat.util.ExceptionUtils;
 import org.apache.tomcat.util.res.StringManager;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.security.Principal;
+import java.security.PrivilegedActionException;
 
 /**
  * Implementation of <code>javax.servlet.FilterChain</code> used to manage
@@ -301,7 +295,7 @@ final class ApplicationFilterChain implements FilterChain, CometFilterChain {
                                                args,
                                                principal);
                 } else {
-                    // 执行servlet
+                    // 执行servlet   HttpServlet判断具体执行doGet() doPost() 
                     servlet.service(request, response);
                 }
             } else {

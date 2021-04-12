@@ -272,7 +272,10 @@ public abstract class AbstractInputBuffer<S> implements InputBuffer{
              * contentLength : IdentityInputFilter
              */
             int extraBytes = (int) activeFilters[lastActiveFilter].end();
-            pos = pos - extraBytes; // 把pos向前移动
+            /**
+             * 修复pos的位置
+             */
+            pos = pos - extraBytes;
         }
     }
 

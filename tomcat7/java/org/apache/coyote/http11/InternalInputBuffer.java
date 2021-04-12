@@ -564,6 +564,10 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
         return fill(true);
     }
 
+
+    /**
+     * bio 阻塞的
+     */
     @Override
     protected boolean fill(boolean block) throws IOException {
 
@@ -578,6 +582,7 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
                     (sm.getString("iib.requestheadertoolarge.error"));
             }
 
+            //阻塞的
             // 从inputStream中读取数据（内核缓冲区到应用缓冲区），len表示要读取的数据长度，pos表示把从inputStream读到的数据放在buf的pos位置
             // nRead表示真实读取到的数据
             nRead = inputStream.read(buf, pos, buf.length - lastValid);
@@ -586,12 +591,16 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
             }
 
         } else {
+
+
             // 当读取请求体的数据时
-            // buf.length - end表示还能存放多少请求体数据，如果小于4500，那么就新生成一个byte数组，这个新的数组专门用来盛放请求体
+            //end表示请求头结束的位置 也即请求体开始的位置
+            // buf.length - end表示最多还能存放多少请求体数据，如果小于4500，那么就新生成一个byte数组，这个新的数组专门用来盛放请求体
             if (buf.length - end < 4500) {
                 // In this case, the request header was really large, so we allocate a
                 // brand new one; the old one will get GCed when subsequent requests
                 // clear all references
+                //旧的数组还被Request的里的method和uri（ByteChunk）所指向 所以method和uri等还是能拿到的
                 buf = new byte[buf.length];
                 end = 0;
             }

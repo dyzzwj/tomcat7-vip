@@ -16,12 +16,6 @@
  */
 package org.apache.coyote.http11.filters;
 
-import java.io.EOFException;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.Locale;
-import java.util.Set;
-
 import org.apache.coyote.InputBuffer;
 import org.apache.coyote.Request;
 import org.apache.coyote.http11.Constants;
@@ -31,6 +25,12 @@ import org.apache.tomcat.util.buf.HexUtils;
 import org.apache.tomcat.util.buf.MessageBytes;
 import org.apache.tomcat.util.http.MimeHeaders;
 import org.apache.tomcat.util.res.StringManager;
+
+import java.io.EOFException;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.Locale;
+import java.util.Set;
 
 /**
  * Chunked input filter. Parses chunked data according to
@@ -174,6 +174,11 @@ public class ChunkedInputFilter implements InputFilter {
      * whichever is greater. If the filter does not do request body length
      * control, the returned value should be -1.
      */
+
+
+    /**
+     * 分块读 每次调用doRead() 只会读取一个数据块
+     */
     @Override
     public int doRead(ByteChunk chunk, Request req) throws IOException {
         if (endChunk) {
@@ -189,9 +194,11 @@ public class ChunkedInputFilter implements InputFilter {
         }
 
         if (remaining <= 0) {
+            //解析请求块
             if (!parseChunkHeader()) {
                 throwIOException(sm.getString("chunkedInputFilter.invalidHeader"));
             }
+            //最后一块
             if (endChunk) {
                 parseEndChunk();
                 return -1;

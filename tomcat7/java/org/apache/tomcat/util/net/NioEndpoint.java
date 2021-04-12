@@ -566,6 +566,9 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
                 pollerThread.start();
             }
 
+            /**
+             * 启动接受连接的线程
+             */
             startAcceptorThreads();
         }
     }
@@ -676,7 +679,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
             socketProperties.setProperties(sock);
 
             // 每接收到一个socket连接就获取一个NioChannel来封装这个socket，NioChannel是可重用的对象
-            NioChannel channel = nioChannels.poll(); // 拿出对头的NioChannel
+            NioChannel channel = nioChannels.poll(); // 拿出队头的NioChannel
             if ( channel == null ) {
                 // SSL setup
                 if (sslContext != null) {
@@ -702,7 +705,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
                     channel.reset();
                 }
             }
-            // 每接收到一个新socket连接，就会生成一个
+            // 每接收到一个新socket连接，就会生成一个 注册到poller上
             getPoller0().register(channel);
         } catch (Throwable t) {
             ExceptionUtils.handleThrowable(t);
@@ -842,6 +845,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
                     SocketChannel socket = null;
                     try {
                         // Accept the next incoming connection from the server
+                        //阻塞的方式获取连接
                         socket = serverSock.accept(); //
                     } catch (IOException ioe) {
                         //we didn't get a socket
@@ -1002,7 +1006,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
     public class Poller implements Runnable {
         // Poller是一个线程
         // events中的也是线程
-
+        //每个Selector绑定一个线程(Poller) 每个Selector(Poller)管理多个socket
         protected Selector selector;
         protected ConcurrentLinkedQueue<Runnable> events = new ConcurrentLinkedQueue<Runnable>();
 
@@ -1295,7 +1299,9 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
                         } else {
                             attachment.access();
                             iterator.remove();
-                            // 处理事件
+                            /**
+                             *  处理读写事件
+                             */
                             processKey(sk, attachment);
                         }
                     }//while

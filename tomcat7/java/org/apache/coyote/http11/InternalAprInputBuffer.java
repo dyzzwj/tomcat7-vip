@@ -56,7 +56,7 @@ public class InternalAprInputBuffer extends AbstractInputBuffer<Long> {
 
         this.request = request;
         headers = request.getMimeHeaders();
-
+        //headerBufferSize : 8 * 1024  8kb
         buf = new byte[headerBufferSize];
         if (headerBufferSize < (8 * 1024)) {
             bbuf = ByteBuffer.allocateDirect(6 * 1500);

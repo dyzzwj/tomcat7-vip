@@ -16,12 +16,6 @@
  */
 package org.apache.coyote.http11;
 
-import java.io.EOFException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.Socket;
-import java.nio.charset.Charset;
-
 import org.apache.coyote.InputBuffer;
 import org.apache.coyote.Request;
 import org.apache.juli.logging.Log;
@@ -31,6 +25,12 @@ import org.apache.tomcat.util.buf.MessageBytes;
 import org.apache.tomcat.util.http.parser.HttpParser;
 import org.apache.tomcat.util.net.AbstractEndpoint;
 import org.apache.tomcat.util.net.SocketWrapper;
+
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.Socket;
+import java.nio.charset.Charset;
 
 /**
  * Implementation of InputBuffer which provides HTTP request header parsing as
@@ -85,6 +85,10 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
      * read operations, or if the given buffer is not big enough to accommodate
      * the whole line.
      */
+
+    /**
+     * 解析请求行   GET /v1/internal/user HTTP/1.1
+     */
     @Override
     public boolean parseRequestLine(boolean useAvailableDataOnly)
 
@@ -97,10 +101,17 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
         //
 
         byte chr = 0;
+        /**
+         * 过滤GET之前的回车换行符
+         */
         do {
             // 把buf里面的字符一个个取出来进行判断，遇到非回车换行符则会退出
 
             // Read new bytes if needed
+            /**
+             *  pos = lastValid buf中的数据读完了
+             *  pos > lastValid 异常
+             */
             // 如果一直读到的回车换行符则再次调用fill,从inputStream里面读取数据填充到buf中
             if (pos >= lastValid) {
                 if (!fill())
@@ -114,6 +125,9 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
             chr = buf[pos++];
         } while ((chr == Constants.CR) || (chr == Constants.LF));
 
+        /**
+         * 上面的buf[pos++]中pos是先用后加 所以这里--
+         */
         pos--;
 
         // Mark the current buffer position
@@ -126,9 +140,17 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
 
         boolean space = false;
 
+
+        /**
+         * 找到空格或tab 说明找到GET了 (Get | Post ..)  退出循环
+         */
         while (!space) {
 
             // Read new bytes if needed
+            /**
+             *  pos = lastValid buf中的数据读完了
+             *  pos > lastValid 异常
+             */
             if (pos >= lastValid) {
                 if (!fill())
                     throw new EOFException(sm.getString("iib.eof.error"));
@@ -138,6 +160,19 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
             // also be tolerant of multiple SP and/or HT.
             if (buf[pos] == Constants.SP || buf[pos] == Constants.HT) {
                 space = true;
+                //设置字节  没有转换成String？ 1、效率（开发人员不一定需要用） 2、不用考虑编码
+                /**
+                 *  设置请求方法（以字节的形式保存 并没有转换成String）
+                 *  ByteChunk:字节块
+                 *  buf：源字节数组
+                 *  start:buf的下标为start表示ByteChunk中数据的开始位置
+                 *  end:buf的下标为end表示ByteChunk中数据的结束位置
+                 *
+                 *  注意 并没有把buf中的数据拷贝到ByteChunk 而是ByteChunk保存了InputBuffer中buf的引用,
+                 *  并使用start、end记录当前ByteChunk的数据在buf中的起始集合结束为止
+                 *  在真正调用RequestFacade.getMethod()方法时 才会把 coyote.Request.method()的字节数据转换为String
+                 *  即取InputBuffer中buf下标为start和end的部分 转为String
+                 */
                 request.method().setBytes(buf, start, pos - start);
             } else if (!HttpParser.isToken(buf[pos])) {
                 throw new IllegalArgumentException(sm.getString("iib.invalidmethod"));
@@ -148,6 +183,9 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
         }
 
         // Spec says single SP but also be tolerant of multiple SP and/or HT
+        /**
+         * 过滤空格或tab
+         */
         while (space) {
             // Read new bytes if needed
             if (pos >= lastValid) {
@@ -172,6 +210,9 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
 
         boolean eol = false;
 
+        /**
+         * 解析uri /v1/internal/user
+         */
         while (!space) {
 
             // Read new bytes if needed
@@ -523,6 +564,10 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
         return fill(true);
     }
 
+
+    /**
+     * bio 阻塞的
+     */
     @Override
     protected boolean fill(boolean block) throws IOException {
 
@@ -530,13 +575,15 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
 
         if (parsingHeader) {
 
+            //如果请求行 + 请求头的大小 > 8kb 抛异常
             // 如果还在解析请求头，lastValid表示当前解析数据的下标位置，如果该位置等于buf的长度了，表示请求头的数据超过buf了。
             if (lastValid == buf.length) {
                 throw new IllegalArgumentException
                     (sm.getString("iib.requestheadertoolarge.error"));
             }
 
-            // 从inputStream中读取数据，len表示要读取的数据长度，pos表示把从inputStream读到的数据放在buf的pos位置
+            //阻塞的
+            // 从inputStream中读取数据（内核缓冲区到应用缓冲区），len表示要读取的数据长度，pos表示把从inputStream读到的数据放在buf的pos位置
             // nRead表示真实读取到的数据
             nRead = inputStream.read(buf, pos, buf.length - lastValid);
             if (nRead > 0) {
@@ -544,12 +591,16 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
             }
 
         } else {
+
+
             // 当读取请求体的数据时
-            // buf.length - end表示还能存放多少请求体数据，如果小于4500，那么就新生成一个byte数组，这个新的数组专门用来盛放请求体
+            //end表示请求头结束的位置 也即请求体开始的位置
+            // buf.length - end表示最多还能存放多少请求体数据，如果小于4500，那么就新生成一个byte数组，这个新的数组专门用来盛放请求体
             if (buf.length - end < 4500) {
                 // In this case, the request header was really large, so we allocate a
                 // brand new one; the old one will get GCed when subsequent requests
                 // clear all references
+                //旧的数组还被Request的里的method和uri（ByteChunk）所指向 所以method和uri等还是能拿到的
                 buf = new byte[buf.length];
                 end = 0;
             }
@@ -579,7 +630,10 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
 
 
         /**
-         * Read bytes into the specified chunk.
+         * InputBuffer会从操作系统的RecvBuf中读取数据 fill()方法
+         * 从InputBuffer中读取剩余数据到ByteChunk(实际上标记)，使用ByteChunk标记buffer中的剩余数据（pos到lastValid）
+         * 此时buffer中的数据被读完了(pos 等于 lastValid) 此时就可以根据ByteChunk读取buffer中的数据
+         * nRead表示读到了多少了数据
          */
         @Override
         public int doRead(ByteChunk chunk, Request req )
@@ -595,6 +649,7 @@ public class InternalInputBuffer extends AbstractInputBuffer<Socket> {
             chunk.setBytes(buf, pos, length);
             // 因为这里是读取请求体，在解析请求行，请求头时，pos是每解析一个字符就移动一下，
             // 而这里不一样，这里只是负责把请求体的数据读出来即可，对于tomcat来说并不用这部分数据，所以直接把pos移动到lastValid位置
+            //表示InputBuffer的数据被读完了
             pos = lastValid;
 
 

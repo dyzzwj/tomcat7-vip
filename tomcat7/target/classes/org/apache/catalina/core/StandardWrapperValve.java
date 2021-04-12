@@ -19,16 +19,6 @@
 package org.apache.catalina.core;
 
 
-import java.io.IOException;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import javax.servlet.DispatcherType;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.Servlet;
-import javax.servlet.ServletException;
-import javax.servlet.UnavailableException;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.catalina.Context;
 import org.apache.catalina.Globals;
 import org.apache.catalina.LifecycleException;
@@ -42,6 +32,11 @@ import org.apache.tomcat.util.ExceptionUtils;
 import org.apache.tomcat.util.buf.MessageBytes;
 import org.apache.tomcat.util.log.SystemLogHandler;
 import org.apache.tomcat.util.res.StringManager;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Valve that implements the default basic behavior for the
@@ -182,6 +177,7 @@ final class StandardWrapperValve
         ApplicationFilterFactory factory =
             ApplicationFilterFactory.getInstance();
 
+        //创建过滤器链
         ApplicationFilterChain filterChain =
             factory.createFilterChain(request, wrapper, servlet);
 
@@ -218,6 +214,7 @@ final class StandardWrapperValve
                         request.setComet(true);
                         filterChain.doFilterEvent(request.getEvent());
                     } else {
+                        //执行过滤器链
                         filterChain.doFilter
                             (request.getRequest(), response.getResponse());
                     }

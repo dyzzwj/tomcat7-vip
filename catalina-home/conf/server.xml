@@ -167,7 +167,7 @@
                prefix="localhost_access_log." suffix=".txt"
                pattern="%h %l %u %t &quot;%r&quot; %s %b" />
 
-<!--        <Valve className="com.luban.TestValve"/>-->
+<!--        <Valve className="com.dyzwj.TestValve"/>-->
 
       </Host>
 

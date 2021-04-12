@@ -113,6 +113,8 @@ public class InternalOutputBuffer extends AbstractOutputBuffer<Socket>
     public void flush()
         throws IOException {
 
+        //判断有没有发送请求头
+        //AbstractOutputBuffer.flush
         super.flush();
 
         // Flush the current buffer
@@ -161,6 +163,7 @@ public class InternalOutputBuffer extends AbstractOutputBuffer<Socket>
 
         // 如果使用了socketbuffer，则将socketbuffer中的数据发送出去
         if (useSocketBuffer) {
+
             socketBuffer.flushBuffer();
         }
     }
@@ -203,6 +206,7 @@ public class InternalOutputBuffer extends AbstractOutputBuffer<Socket>
             if (useSocketBuffer) {
                 socketBuffer.append(buf, 0, pos);
             } else {
+                //SocketOutputStream
                 outputStream.write(buf, 0, pos);
             }
         }
@@ -239,7 +243,7 @@ public class InternalOutputBuffer extends AbstractOutputBuffer<Socket>
         public int doWrite(ByteChunk chunk, Response res) throws IOException {
             try {
                 int length = chunk.getLength();
-                // 如果再次发送到缓冲区中，则该缓冲区慢了之后就会发送，或者当前请求要结束时发送
+                // 如果再次发送到缓冲区中，则该缓冲区（ByteChunk的buff属性）满了之后就会发送，或者当前请求要结束时发送
                 if (useSocketBuffer) {
                     socketBuffer.append(chunk.getBuffer(), chunk.getStart(),
                                         length);

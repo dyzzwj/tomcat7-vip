@@ -16,12 +16,6 @@
  */
 package org.apache.coyote.http11;
 
-import java.io.EOFException;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.util.Set;
-
 import org.apache.coyote.ActionCode;
 import org.apache.coyote.http11.filters.BufferedInputFilter;
 import org.apache.juli.logging.Log;
@@ -32,6 +26,12 @@ import org.apache.tomcat.util.net.JIoEndpoint;
 import org.apache.tomcat.util.net.SSLSupport;
 import org.apache.tomcat.util.net.SocketStatus;
 import org.apache.tomcat.util.net.SocketWrapper;
+
+import java.io.EOFException;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.util.Set;
 
 
 /**
@@ -165,6 +165,8 @@ public class Http11Processor extends AbstractHttp11Processor<Socket> {
             if (keepAliveTimeout == -1) {
                 firstReadTimeout = 0;
             } else {
+
+                //排队时间  即socket加入到线程池后 等待调度的时间
                 // 一个socket在被处理之前会调用一下access方法，所以queueTime表示的是socket创建好了到真正被处理这段过程的排队时间
                 long queueTime =
                     System.currentTimeMillis() - socketWrapper.getLastAccess();

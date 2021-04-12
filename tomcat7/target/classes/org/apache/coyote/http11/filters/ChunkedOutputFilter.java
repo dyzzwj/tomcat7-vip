@@ -113,11 +113,15 @@ public class ChunkedOutputFilter implements OutputFilter {
             chunkLength[--pos] = HexUtils.getHex(digit);
         }
         chunkHeader.setBytes(chunkLength, pos, 10 - pos);
+
+        //先发送chunked的头 块长度\r\n
+        //OutputStreamOutputBuffer.doWrite
         buffer.doWrite(chunkHeader, res);
 
         buffer.doWrite(chunk, res);
 
         chunkHeader.setBytes(chunkLength, 8, 2);
+
         buffer.doWrite(chunkHeader, res);
 
         return result;
@@ -147,6 +151,7 @@ public class ChunkedOutputFilter implements OutputFilter {
     @Override
     public long end() throws IOException {
         // Write end chunk
+        //写一个chunked的结束块到底层缓冲区
         buffer.doWrite(END_CHUNK, null);
 
         return 0;

@@ -201,6 +201,7 @@ public final class Response {
             if (param == null) {
                 hook.action(actionCode, this);
             } else {
+                //AbstractHttp11Processor.action
                 hook.action(actionCode, param);
             }
         }
@@ -415,6 +416,7 @@ public final class Response {
      *  interceptors to fix headers.
      */
     public void sendHeaders() {
+
         action(ActionCode.COMMIT, this);
         setCommitted(true);
     }
@@ -575,7 +577,8 @@ public final class Response {
     public void doWrite(ByteChunk chunk)
         throws IOException
     {
-        // 把chunk中的数据写入InternalOutputBuffer
+
+        //先调用AbstractOutputBuffer.doWrite  把chunk中的数据写入InternalOutputBuffer
         outputBuffer.doWrite(chunk, this);
         contentWritten+=chunk.getLength();
     }

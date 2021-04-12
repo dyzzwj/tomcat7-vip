@@ -213,6 +213,8 @@ public class IdentityInputFilter implements InputFilter {
             int nread = buffer.doRead(endChunk, null);
             if (nread > 0 ) {
                 // 如果读到了数据
+
+                // 请求体的长度累计
                 swallowed += nread;
                 // 更新剩余数据
                 remaining = remaining - nread;

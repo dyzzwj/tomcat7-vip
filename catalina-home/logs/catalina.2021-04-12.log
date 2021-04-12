@@ -1,0 +1,81 @@
+Apr 12, 2021 3:19:48 PM org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor processChildren
+SEVERE: Exception invoking periodic operation: 
+java.lang.NoClassDefFoundError: org/apache/catalina/startup/HostConfig$DeployWar
+	at org.apache.catalina.startup.HostConfig.deployWARs(HostConfig.java:875)
+	at org.apache.catalina.startup.HostConfig.deployApps(HostConfig.java:537)
+	at org.apache.catalina.startup.HostConfig.check(HostConfig.java:1846)
+	at org.apache.catalina.startup.HostConfig.lifecycleEvent(HostConfig.java:366)
+	at org.apache.catalina.util.LifecycleSupport.fireLifecycleEvent(LifecycleSupport.java:117)
+	at org.apache.catalina.util.LifecycleBase.fireLifecycleEvent(LifecycleBase.java:90)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1528)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1710)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1721)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1688)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.ClassNotFoundException: org.apache.catalina.startup.HostConfig$DeployWar
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:349)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 11 more
+
+Apr 12, 2021 3:19:59 PM org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor processChildren
+SEVERE: Exception invoking periodic operation: 
+java.lang.NoClassDefFoundError: org/apache/catalina/startup/HostConfig$DeployWar
+	at org.apache.catalina.startup.HostConfig.deployWARs(HostConfig.java:875)
+	at org.apache.catalina.startup.HostConfig.deployApps(HostConfig.java:537)
+	at org.apache.catalina.startup.HostConfig.check(HostConfig.java:1846)
+	at org.apache.catalina.startup.HostConfig.lifecycleEvent(HostConfig.java:366)
+	at org.apache.catalina.util.LifecycleSupport.fireLifecycleEvent(LifecycleSupport.java:117)
+	at org.apache.catalina.util.LifecycleBase.fireLifecycleEvent(LifecycleBase.java:90)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1528)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1710)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1721)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1688)
+	at java.lang.Thread.run(Thread.java:748)
+
+Apr 12, 2021 3:20:09 PM org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor processChildren
+SEVERE: Exception invoking periodic operation: 
+java.lang.NoClassDefFoundError: org/apache/catalina/startup/HostConfig$DeployWar
+	at org.apache.catalina.startup.HostConfig.deployWARs(HostConfig.java:875)
+	at org.apache.catalina.startup.HostConfig.deployApps(HostConfig.java:537)
+	at org.apache.catalina.startup.HostConfig.check(HostConfig.java:1846)
+	at org.apache.catalina.startup.HostConfig.lifecycleEvent(HostConfig.java:366)
+	at org.apache.catalina.util.LifecycleSupport.fireLifecycleEvent(LifecycleSupport.java:117)
+	at org.apache.catalina.util.LifecycleBase.fireLifecycleEvent(LifecycleBase.java:90)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1528)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1710)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1721)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1688)
+	at java.lang.Thread.run(Thread.java:748)
+
+Apr 12, 2021 3:20:19 PM org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor processChildren
+SEVERE: Exception invoking periodic operation: 
+java.lang.NoClassDefFoundError: org/apache/catalina/startup/HostConfig$DeployWar
+	at org.apache.catalina.startup.HostConfig.deployWARs(HostConfig.java:875)
+	at org.apache.catalina.startup.HostConfig.deployApps(HostConfig.java:537)
+	at org.apache.catalina.startup.HostConfig.check(HostConfig.java:1846)
+	at org.apache.catalina.startup.HostConfig.lifecycleEvent(HostConfig.java:366)
+	at org.apache.catalina.util.LifecycleSupport.fireLifecycleEvent(LifecycleSupport.java:117)
+	at org.apache.catalina.util.LifecycleBase.fireLifecycleEvent(LifecycleBase.java:90)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1528)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1710)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1721)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1688)
+	at java.lang.Thread.run(Thread.java:748)
+
+Apr 12, 2021 3:20:29 PM org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor processChildren
+SEVERE: Exception invoking periodic operation: 
+java.lang.NoClassDefFoundError: org/apache/catalina/startup/HostConfig$DeployWar
+	at org.apache.catalina.startup.HostConfig.deployWARs(HostConfig.java:875)
+	at org.apache.catalina.startup.HostConfig.deployApps(HostConfig.java:537)
+	at org.apache.catalina.startup.HostConfig.check(HostConfig.java:1846)
+	at org.apache.catalina.startup.HostConfig.lifecycleEvent(HostConfig.java:366)
+	at org.apache.catalina.util.LifecycleSupport.fireLifecycleEvent(LifecycleSupport.java:117)
+	at org.apache.catalina.util.LifecycleBase.fireLifecycleEvent(LifecycleBase.java:90)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1528)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1710)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1721)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1688)
+	at java.lang.Thread.run(Thread.java:748)
+
