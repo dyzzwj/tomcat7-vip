@@ -10,8 +10,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="tomcat" target="8" />
-      <module name="tomcat-7.0.x" target="8" />
+      <module name="tomcat" target="1.8" />
+      <module name="tomcat-7.0.x" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

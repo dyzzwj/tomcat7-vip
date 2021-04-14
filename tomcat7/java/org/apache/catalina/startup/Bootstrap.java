@@ -244,6 +244,7 @@ public final class Bootstrap {
         paramValues[0] = sharedLoader;
         Method method =
             startupInstance.getClass().getMethod(methodName, paramTypes);
+        //执行Catalina.setParentClassLoader
         method.invoke(startupInstance, paramValues);
 
         catalinaDaemon = startupInstance;
@@ -275,6 +276,7 @@ public final class Bootstrap {
             catalinaDaemon.getClass().getMethod(methodName, paramTypes);
         if (log.isDebugEnabled())
             log.debug("Calling startup class " + method);
+        //Catalina.load()
         method.invoke(catalinaDaemon, param);
 
     }
@@ -417,8 +419,8 @@ public final class Bootstrap {
      */
     public static void main(String args[]) {
 
-    if (daemon == null) {
-                // Don't set daemon until init() has completed
+        if (daemon == null) {
+            // Don't set daemon until init() has completed
             Bootstrap bootstrap = new Bootstrap();
             try {
                 bootstrap.init(); // catalinaaemon
@@ -449,6 +451,9 @@ public final class Bootstrap {
                 args[args.length - 1] = "stop";
                 daemon.stop();
             } else if (command.equals("start")) {
+                /**
+                 * 启动tomcat服务器
+                 */
                 daemon.setAwait(true);  // 设置阻塞标志
                 daemon.load(args);      // 解析server.xml,初始化Catalina
                 daemon.start();
