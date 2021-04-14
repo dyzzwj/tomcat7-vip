@@ -265,6 +265,7 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
         this.parent = p;
 
         ClassLoader j = String.class.getClassLoader();
+        System.out.println(j);
         if (j == null) {
             j = getSystemClassLoader();
             while (j.getParent() != null) {
@@ -1874,7 +1875,7 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
 
             // (0) Check our previously loaded local class cache
             // 先检查该类是否已经被Webapp类加载器加载。
-            clazz = findLoadedClass0(name); // map
+            clazz = findLoadedClass0(name); // 本地缓存
             if (clazz != null) {
                 if (log.isDebugEnabled())
                     log.debug("  Returning class from cache");
@@ -1896,9 +1897,10 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
 
             // (0.2) Try loading the class with the system class loader, to prevent
             //       the webapp from overriding J2SE classes
-            // 尝试通过系统类加载器（AppClassLoader）加载类，防止webapp重写JDK中的类
+            // 尝试通过扩展类加载器器（ExtCladdLoader）加载类，防止webapp重写JDK中的类
             // 假设，webapp想自己去加载一个java.lang.String的类，这是不允许的，必须在这里进行预防。
             try {
+                //ExtCladdLoader
                 clazz = j2seClassLoader.loadClass(name);    // java.lang.Object
                 if (clazz != null) {
                     if (resolve)
@@ -3755,6 +3757,7 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
      */
     protected Class<?> findLoadedClass0(String name) {   //com.luban.Test
         String path = binaryNameToPath(name, true);   // com/luban/Test
+        //先从缓存里获取
         ResourceEntry entry = resourceEntries.get(path);
         if (entry != null) {
             return entry.loadedClass;

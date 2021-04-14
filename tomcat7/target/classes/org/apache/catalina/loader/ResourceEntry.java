@@ -34,12 +34,14 @@ public class ResourceEntry {
      * The "last modified" time of the origin file at the time this class
      * was loaded, in milliseconds since the epoch.
      */
+    //最近一次修改时间 跟热加载相关
     public long lastModified = -1;
 
 
     /**
      * Binary content of the resource.
      */
+    //class文件内容
     public byte[] binaryContent = null;
 
 
