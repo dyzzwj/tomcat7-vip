@@ -309,9 +309,15 @@ public abstract class AbstractInputBuffer<S> implements InputBuffer{
         // 要么是ChunkedInputFilter: 客户端分块发送的，ChunkedInputFilter一次读一块数据
         // 要么是VoidInputFilter：直接读不到数据，不管到底有没有请求体
 
+        //如果没有ActiveFilter，则直接从inputStreamInputBuffer中读取
         if (lastActiveFilter == -1)
             return inputStreamInputBuffer.doRead(chunk, req);
         else
+
+        /**
+         * contentLength:IdentityInputFilter#doRead()
+         * chunked: ChunkedInputFilter#doRead()
+         */
             return activeFilters[lastActiveFilter].doRead(chunk,req);
 
     }

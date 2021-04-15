@@ -191,7 +191,7 @@ public class Http11Processor extends AbstractHttp11Processor<Socket> {
             }
             // Once the first byte has been read, the standard timeout should be
             // used so restore it here.
-            // 当第一次读取数据完成后，设置socket的超时时间为原本的超时时间
+            // 当第一次读取数据完成后，设置socket的超时时间为原本的超时时间(对于bio，如果是keepalive，必须重新设置下一个请求的超时时间)
             if (endpoint.getSoTimeout()> 0) {
                 setSocketTimeout(endpoint.getSoTimeout());
             } else {

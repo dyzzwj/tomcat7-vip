@@ -120,7 +120,9 @@ public final class ByteChunk extends AbstractChunk {
     private byte[] buff;
 
     // transient as serialization is primarily for values via, e.g. JMX
+    //标记的请求体
     private transient ByteInputChannel in = null;
+    //标记的响应体
     private transient ByteOutputChannel out = null;
 
 
@@ -428,7 +430,7 @@ public final class ByteChunk extends AbstractChunk {
     public int substract(byte dest[], int off, int len) throws IOException {
         /**
          * 这里会对当前ByteChunk初始化
-         * 如果ByteChunk中的数据读完了 就从操作系统缓存中读数据到ChunkBuffer
+         * 如果ByteChunk中的数据读完了 就从操作系统缓存中读数据到InputBuffer ByteChunk是对InputBuffer数据的标记
          */
         if (checkEof()) {
             return -1;

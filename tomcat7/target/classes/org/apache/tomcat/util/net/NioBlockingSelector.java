@@ -168,6 +168,7 @@ public class NioBlockingSelector {
         KeyAttachment att = (KeyAttachment) key.attachment();
         int read = 0;
         boolean timedout = false;
+        //假设有一个就绪事件了
         int keycount = 1; //assume we can read
         long time = System.currentTimeMillis(); //start the timeout timer
         try {
@@ -360,10 +361,11 @@ public class NioBlockingSelector {
                         // 这个wakeupCounter只有0，-1，1三中情况
                         int i = wakeupCounter.get();
                         // i==1表示添加了PollerEvent，并且上面执行了events方法，所以应该可以直接selectNow查询到事件
+                        //调用events.add时会给wakeupCounter + 1
                         if (i>0)
                             keyCount = selector.selectNow();
                         else {
-                            // 此处i只可能为0，然后改成-1，表示没有添加过PollerEvent，然后阻塞获取
+                            // 此处i只可能为0，然后改成-1，表示没有添加过PollerEvent（没有调用event.add），然后阻塞获取
                             // 在阻塞获取就绪事件的过程中，很有可能添加了PollerEvent进入到了events中，并且会被唤醒，调用selector.wakeup()
                             wakeupCounter.set(-1);
                             keyCount = selector.select(1000);
@@ -399,9 +401,11 @@ public class NioBlockingSelector {
                             iterator.remove();
                             sk.interestOps(sk.interestOps() & (~sk.readyOps()));
                             if ( sk.isReadable() ) {
+                                //解阻塞  - 读请求体
                                 countDown(attachment.getReadLatch());
                             }
                             if (sk.isWritable()) {
+                                //解阻塞 - 响应
                                 countDown(attachment.getWriteLatch());
                             }
                         }catch (CancelledKeyException ckx) {
