@@ -263,14 +263,17 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
             p = getSystemClassLoader();
         }
         this.parent = p;
-
+        //引导类加载器 BootstrapClassLoader  j = null
         ClassLoader j = String.class.getClassLoader();
+        System.out.println(j);
         if (j == null) {
+            //满足
             j = getSystemClassLoader();
             while (j.getParent() != null) {
                 j = j.getParent();
             }
         }
+        //ExtClassLoader
         this.j2seClassLoader = j;
 
         securityManager = System.getSecurityManager();
@@ -1443,6 +1446,7 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
             // 找不到再自己find
             if ((clazz == null)) {
                 try {
+                    //从自己管理的目录下加载
                     clazz = findClassInternal(name);
                 } catch(ClassNotFoundException cnfe) {
                     if (!hasExternalRepositories || searchExternalFirst) {
@@ -1874,7 +1878,7 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
 
             // (0) Check our previously loaded local class cache
             // 先检查该类是否已经被Webapp类加载器加载。
-            clazz = findLoadedClass0(name); // map
+            clazz = findLoadedClass0(name); // 本地缓存
             if (clazz != null) {
                 if (log.isDebugEnabled())
                     log.debug("  Returning class from cache");
@@ -1896,9 +1900,10 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
 
             // (0.2) Try loading the class with the system class loader, to prevent
             //       the webapp from overriding J2SE classes
-            // 尝试通过系统类加载器（AppClassLoader）加载类，防止webapp重写JDK中的类
-            // 假设，webapp想自己去加载一个java.lang.String的类，这是不允许的，必须在这里进行预防。
+            // 尝试通过扩展类加载器器（ExtCladdLoader）加载类，防止webapp重写JDK中的类
+            // 假设，webapp想自己去加载一个java.lang.String的类，这是不允许的(会报错)，必须在这里进行预防。
             try {
+                //ExtCladdLoader
                 clazz = j2seClassLoader.loadClass(name);    // java.lang.Object
                 if (clazz != null) {
                     if (resolve)
@@ -1938,6 +1943,7 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
                 if (log.isDebugEnabled())
                     log.debug("  Delegating to parent classloader1 " + parent);
                 try {
+                    //使用parent这个类加载器去加载name类
                     clazz = Class.forName(name, false, parent);
                     if (clazz != null) {
                         if (log.isDebugEnabled())
@@ -1956,6 +1962,7 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
             if (log.isDebugEnabled())
                 log.debug("  Searching local repositories");
             try {
+                //自己去加载
                 clazz = findClass(name);  // classes,lib
                 if (clazz != null) {
                     if (log.isDebugEnabled())
@@ -3198,6 +3205,7 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
             entry = AccessController.doPrivileged(dp);
         } else {
             // ---->ResourceEntry---->loadedClass
+            //去web-inf/classes目录或web-inf/lib目录下去找class文件
             entry = findResourceInternal(name, path, true);
         }
 
@@ -3286,6 +3294,7 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
             }
 
             try {
+                //使用字节数组生成Class对象
                 clazz = defineClass(name, entry.binaryContent, 0,
                         entry.binaryContent.length,
                         new CodeSource(entry.codeBase, entry.certificates));
@@ -3341,7 +3350,7 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
      * com.luban.Test
      * com/luban/Test
      */
-    protected ResourceEntry findResourceInternal(final String name, final String path,
+    protected ResourceEntry  findResourceInternal(final String name, final String path,
             final boolean manifestRequired) {
         if (!started) {
             log.info(sm.getString("webappClassLoader.stopped", name));
@@ -3402,9 +3411,10 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
 
         boolean fileNeedConvert = false;
 
+        //先去web-inf/classes目录下去找
         for (i = 0; (entry == null) && (i < repositoriesLength); i++) {
             try {
-
+                //拿到class的全路径
                 String fullPath = repositories[i] + path;
 
                 Object lookupResult = resources.lookup(fullPath);
@@ -3485,6 +3495,8 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
         if ((entry == null) && (notFoundResources.containsKey(name)))
             return null;
 
+
+        //如果web-inf/classes目录下没有class文件 并且class文件不在notFoundResources中
         synchronized (jarFiles) {
 
             try {
@@ -3755,6 +3767,7 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
      */
     protected Class<?> findLoadedClass0(String name) {   //com.luban.Test
         String path = binaryNameToPath(name, true);   // com/luban/Test
+        //先从缓存里获取
         ResourceEntry entry = resourceEntries.get(path);
         if (entry != null) {
             return entry.loadedClass;

@@ -271,6 +271,7 @@ public class NioSelectorPool {
                 }
                 if ( selector != null ) {//perform a blocking read
                     //register OP_WRITE to the selector
+                    //注册读事件到辅助selector
                     if (key==null) key = socket.getIOChannel().register(selector, SelectionKey.OP_READ);
                     else key.interestOps(SelectionKey.OP_READ);
                     keycount = selector.select(readTimeout);
