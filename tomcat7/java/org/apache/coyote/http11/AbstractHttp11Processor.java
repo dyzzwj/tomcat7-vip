@@ -834,7 +834,7 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
                  *  决定使用contentLength和chunked分块传输
                  */
                 prepareResponse();
-                //// 将InternalOutputBuffer中的数据发送给socket
+                // 将InternalOutputBuffer中的数据添加到下一级缓存
                 getOutputBuffer().commit();
             } catch (IOException e) {
                 setErrorState(ErrorState.CLOSE_NOW, e);
@@ -1748,6 +1748,7 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
                 getOutputBuffer().addActiveFilter
                     (outputFilters[Constants.CHUNKED_FILTER]);
                 contentDelimitation = true;
+                //Transfer-Encoding:chunked
                 headers.addValue(Constants.TRANSFERENCODING).setString(Constants.CHUNKED);
             } else {
                 getOutputBuffer().addActiveFilter
