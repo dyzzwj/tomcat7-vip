@@ -120,7 +120,9 @@ public final class ByteChunk extends AbstractChunk {
     private byte[] buff;
 
     // transient as serialization is primarily for values via, e.g. JMX
+    //标记的请求体
     private transient ByteInputChannel in = null;
+    //标记的响应体
     private transient ByteOutputChannel out = null;
 
 
@@ -325,15 +327,22 @@ public final class ByteChunk extends AbstractChunk {
         // and avoid an extra copy
         // 如果要添加到缓冲区中的数据大小正好等于最大限制，并且缓冲区是空的，那么则直接把数据发送给out，不要存在缓冲区中了
         if (optimizedWrite && len == limit && end == start && out != null) {
-            //写到OutputBuffer.realWriteBytes
-            //InternalOutputBuffer.realWriteBytes
+            /**
+             *   如果是OutputBuffer类中调用ByteChunk.append方法，out -> OutputBuffer
+             *   如果是InternalOutputBuffer类中调用ByteChunk.append方法，out -> InternalOutputBuffer
+             *    OutputBuffer.realWriteBytes
+             *    InternalOutputBuffer.realWriteBytes
+             */
             out.realWriteBytes(src, off, len);
             return;
         }
 
         // if we are below the limit
-        // 如果要发送的数据长度小于缓冲区中剩余空间，则把数据填充到剩余空间
-        //makeSpace()方法中保证了 buff.length要么是limit 要么buff.length - end >= len
+        //
+        /**
+         * 如果要发送的数据长度小于缓冲区中剩余空间，则把数据填充到剩余空间
+         * makeSpace()方法中保证了 buff.length要么是limit 要么buff.length - end >= len
+         */
         if (len <= limit - end) {
             System.arraycopy(src, off, buff, end, len);
             end += len;
@@ -349,7 +358,11 @@ public final class ByteChunk extends AbstractChunk {
         // We chunk the data into slices fitting in the buffer limit, although
         // if the data is written directly if it doesn't fit.
 
-        // 缓冲区中还能容纳avail个字节的数据
+        /**
+         *  代码走到这里 此时的buffer.length 就是 limit
+         * 缓冲区中还能容纳avail个字节的数据
+         */
+
         int avail = limit - end;
         // 先将一部分数据复制到buff，填满缓冲区
         System.arraycopy(src, off, buff, end, avail);
@@ -428,7 +441,7 @@ public final class ByteChunk extends AbstractChunk {
     public int substract(byte dest[], int off, int len) throws IOException {
         /**
          * 这里会对当前ByteChunk初始化
-         * 如果ByteChunk中的数据读完了 就从操作系统缓存中读数据到ChunkBuffer
+         * 如果ByteChunk中的数据读完了 就从操作系统缓存中读数据到InputBuffer ByteChunk是对InputBuffer数据的标记
          */
         if (checkEof()) {
             return -1;
@@ -502,7 +515,7 @@ public final class ByteChunk extends AbstractChunk {
         int limit = getLimitInternal();
 
         long newSize;
-        // end表示缓冲区中已有数据的最后一个位置，desiredSize表示新数据+已有数据共多大
+        // end表示缓冲区中已有数据的最后一个位置，desiredSize表示新写入数据+已有数据共多大
         long desiredSize = end + count;
 
         // Can't grow above the limit

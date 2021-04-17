@@ -31,21 +31,21 @@ import java.util.HashMap;
  * This is a low-level, efficient representation of a server request. Most
  * fields are GC-free, expensive operations are delayed until the  user code
  * needs the information.
- *
+ * <p>
  * Processing is delegated to modules, using a hook mechanism.
- *
+ * <p>
  * This class is not intended for user code - it is used internally by tomcat
  * for processing the request in the most efficient way. Users ( servlets ) can
  * access the information using a facade, which provides the high-level view
  * of the request.
- *
+ * <p>
  * For lazy evaluation, the request uses the getInfo() hook. The following ids
  * are defined:
  * <ul>
  *  <li>req.encoding - returns the request encoding
  *  <li>req.attribute - returns a module-specific attribute ( like SSL keys, etc ).
  * </ul>
- *
+ * <p>
  * Tomcat defines a number of attributes:
  * <ul>
  *   <li>"org.apache.tomcat.request" - allows access to the low-level
@@ -129,17 +129,17 @@ public final class Request {
     private MessageBytes remoteUser = MessageBytes.newInstance();
     private boolean remoteUserNeedsAuthorization = false;
     private MessageBytes authType = MessageBytes.newInstance();
-    private HashMap<String,Object> attributes = new HashMap<String,Object>();
+    private HashMap<String, Object> attributes = new HashMap<String, Object>();
 
     private Response response;
     private ActionHook hook;
 
-    private long bytesRead=0;
+    private long bytesRead = 0;
     // Time of the request - useful to avoid repeated calls to System.currentTime
     private long startTime = -1;
     private int available = 0;
 
-    private RequestInfo reqProcessorMX=new RequestInfo(this);
+    private RequestInfo reqProcessorMX = new RequestInfo(this);
     // ------------------------------------------------------------- Properties
 
 
@@ -200,7 +200,7 @@ public final class Request {
      * this request.
      *
      * @return The buffer holding the server name, if any. Use isNull() to check
-     *         if there is no value set.
+     * if there is no value set.
      */
     public MessageBytes serverName() {
         return serverNameMB;
@@ -210,8 +210,8 @@ public final class Request {
         return serverPort;
     }
 
-    public void setServerPort(int serverPort ) {
-        this.serverPort=serverPort;
+    public void setServerPort(int serverPort) {
+        this.serverPort = serverPort;
     }
 
     public MessageBytes remoteAddr() {
@@ -230,19 +230,19 @@ public final class Request {
         return localAddrMB;
     }
 
-    public int getRemotePort(){
+    public int getRemotePort() {
         return remotePort;
     }
 
-    public void setRemotePort(int port){
+    public void setRemotePort(int port) {
         this.remotePort = port;
     }
 
-    public int getLocalPort(){
+    public int getLocalPort() {
         return localPort;
     }
 
-    public void setLocalPort(int port){
+    public void setLocalPort(int port) {
         this.localPort = port;
     }
 
@@ -281,7 +281,7 @@ public final class Request {
     }
 
     public long getContentLengthLong() {
-        if( contentLength > -1 ) {
+        if (contentLength > -1) {
             return contentLength;
         }
 
@@ -314,7 +314,7 @@ public final class Request {
 
 
     public void setContentType(MessageBytes mb) {
-        contentTypeMB=mb;
+        contentTypeMB = mb;
     }
 
 
@@ -334,8 +334,8 @@ public final class Request {
     }
 
     public void action(ActionCode actionCode, Object param) {
-        if( hook==null && response!=null )
-            hook=response.getHook();
+        if (hook == null && response != null)
+            hook = response.getHook();
 
         if (hook != null) {
             if (param == null) {
@@ -365,15 +365,15 @@ public final class Request {
     // -------------------- Other attributes --------------------
     // We can use notes for most - need to discuss what is of general interest
 
-    public void setAttribute( String name, Object o ) {
-        attributes.put( name, o );
+    public void setAttribute(String name, Object o) {
+        attributes.put(name, o);
     }
 
-    public HashMap<String,Object> getAttributes() {
+    public HashMap<String, Object> getAttributes() {
         return attributes;
     }
 
-    public Object getAttribute(String name ) {
+    public Object getAttribute(String name) {
         return attributes.get(name);
     }
 
@@ -423,7 +423,7 @@ public final class Request {
 
     /**
      * Read data from the input buffer and put it into a byte chunk.
-     *
+     * <p>
      * The buffer is owned by the protocol implementation - it will be reused on
      * the next read. The Adapter must either process the data in place or copy
      * it to a separate buffer if it needs to hold it. In most cases this is
@@ -432,18 +432,17 @@ public final class Request {
      * without copy.
      *
      * @param chunk The destination to which to copy the data
-     *
      * @return The number of bytes copied
-     *
      * @throws IOException If an I/O error occurs during the copy
      */
     public int doRead(ByteChunk chunk)
-        throws IOException {
+            throws IOException {
 
-        // 首先进入AbstractInputBuffer中的doRead方法 然后从InputStreamInputBuffer中读取数据，其实是标记
+        // 首先进入AbstractInputBuffer中的doRead方法 如果没有ActiveFilter，则直接从inputStreamInputBuffer中读取 其实是标记
+        // 有ActiveFilter则从ActiveFilter中读
         int n = inputBuffer.doRead(chunk, this);
         if (n > 0) {
-            bytesRead+=n;
+            bytesRead += n;
         }
         return n;
     }
@@ -471,18 +470,18 @@ public final class Request {
      * Used to store private data. Thread data could be used instead - but
      * if you have the req, getting/setting a note is just a array access, may
      * be faster than ThreadLocal for very frequent operations.
+     * <p>
+     * Example use:
+     * Catalina CoyoteAdapter:
+     * ADAPTER_NOTES = 1 - stores the HttpServletRequest object ( req/res)
+     * <p>
+     * To avoid conflicts, note in the range 0 - 8 are reserved for the
+     * servlet container ( catalina connector, etc ), and values in 9 - 16
+     * for connector use.
+     * <p>
+     * 17-31 range is not allocated or used.
      *
-     *  Example use:
-     *   Catalina CoyoteAdapter:
-     *      ADAPTER_NOTES = 1 - stores the HttpServletRequest object ( req/res)
-     *
-     *   To avoid conflicts, note in the range 0 - 8 are reserved for the
-     *   servlet container ( catalina connector, etc ), and values in 9 - 16
-     *   for connector use.
-     *
-     *   17-31 range is not allocated or used.
-     *
-     * @param pos Index to use to store the note
+     * @param pos   Index to use to store the note
      * @param value The value to store at that index
      */
     public final void setNote(int pos, Object value) {
@@ -499,14 +498,14 @@ public final class Request {
 
 
     public void recycle() {
-        bytesRead=0;
+        bytesRead = 0;
 
         contentLength = -1;
         contentTypeMB = null;
         charEncoding = null;
         headers.recycle();
         serverNameMB.recycle();
-        serverPort=-1;
+        serverPort = -1;
         localNameMB.recycle();
         localPort = -1;
         remotePort = -1;
@@ -547,6 +546,6 @@ public final class Request {
     }
 
     public boolean isProcessing() {
-        return reqProcessorMX.getStage()==org.apache.coyote.Constants.STAGE_SERVICE;
+        return reqProcessorMX.getStage() == org.apache.coyote.Constants.STAGE_SERVICE;
     }
 }

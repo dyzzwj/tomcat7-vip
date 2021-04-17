@@ -1042,7 +1042,11 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
         openSocket = false;
         sendfileInProgress = false;
         readComplete = true;
-        // NioEndpoint返回true, Bio返回false
+        /**
+         *  NioEndpoint返回true, Bio返回false
+         *
+         *  nio不支持keepalive
+         */
         if (endpoint.getUsePolling()) {
             keptAlive = false;
         } else {
@@ -1137,7 +1141,7 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
                 rp.setStage(org.apache.coyote.Constants.STAGE_PREPARE);  // 设置请求状态为预处理状态
                 try {
                     /**
-                     * 预处理, 主要从请求中处理处keepAlive属性，以及进行一些验证，以及根据请求分析得到ActiveInputFilter
+                     * 预处理, 主要从请求头中处理处keepAlive属性，以及进行一些验证，以及根据请求头分析得到ActiveInputFilter
                      */
                     prepareRequest();
                 } catch (Throwable t) {

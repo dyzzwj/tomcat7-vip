@@ -1151,6 +1151,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
 
             // 获取一个PollerEvent对象，本事件为一个注册事件，对读事件感兴趣（这里暂时还没有真正的向select去注册事件）
             PollerEvent r = eventCache.poll();
+            //注册事件之后应该关注的事件
             ka.interestOps(SelectionKey.OP_READ);//this is what OP_REGISTER turns into.
             if ( r==null) r = new PollerEvent(socket,ka,OP_REGISTER);
             else r.reset(socket,ka,OP_REGISTER);
