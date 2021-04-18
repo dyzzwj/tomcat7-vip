@@ -233,7 +233,12 @@ public final class Bootstrap {
             ("org.apache.catalina.startup.Catalina");
         Object startupInstance = startupClass.newInstance();
 
-        // Set the shared extensions class loader
+        /**
+         * 思考：这里为什么不直接调用Catelina.setParentClassLoader  而是用反射调用
+         *  因为如果直接new Catelina()  那么由于Bootatrao是AppClassLoader加载 所以如果直接new Catalina的话
+         *  Catalina的类加载器就是AppClassLoader
+         *
+         */
         // 设置Catalina实例的父级类加载器为sharedLoader(默认情况下就是commonLoader)
         if (log.isDebugEnabled())
             log.debug("Setting startup class properties");
@@ -423,6 +428,17 @@ public final class Bootstrap {
             // Don't set daemon until init() has completed
             Bootstrap bootstrap = new Bootstrap();
             try {
+                /**
+                 * 1、创建类加载器
+                 * 2、使用反射创建Catalina对象
+                 */
+
+                /**
+                 * 思考：这里为什么不直接调用Catelina.setParentClassLoader  而是用反射调用
+                 *  因为如果直接new Catelina()  那么由于Bootatrao是AppClassLoader加载 所以如果直接new Catalina的话
+                 *  Catalina的类加载器就是AppClassLoader
+                 *
+                 */
                 bootstrap.init(); // catalinaaemon
             } catch (Throwable t) {
                 handleThrowable(t);
@@ -454,8 +470,17 @@ public final class Bootstrap {
                 /**
                  * 启动tomcat服务器
                  */
+
+                //catalina.setAwait()
                 daemon.setAwait(true);  // 设置阻塞标志
-                daemon.load(args);      // 解析server.xml,初始化Catalina
+                /**
+                 * 解析server.xml,初始化Catalina
+                 * Catalina.load()
+                 */
+                daemon.load(args);
+                /**
+                 * Catalina.start
+                 */
                 daemon.start();
                 if (null == daemon.getServer()) {
                     System.exit(1);

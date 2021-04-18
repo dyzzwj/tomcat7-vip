@@ -413,10 +413,14 @@ public class CoyoteAdapter implements Adapter {
 
 
     @Override
-    public void service(org.apache.coyote.Request req, org.apache.coyote.Response res)
+    public void  service(org.apache.coyote.Request req, org.apache.coyote.Response res)
             throws Exception {
 
-        Request request = (Request) req.getNote(ADAPTER_NOTES); // Request-->Request
+        /**
+         *   coyote.Request-->conection.Request
+         *   先从尝试从coyote.Request的缓存中拿conection.Request
+         */
+        Request request = (Request) req.getNote(ADAPTER_NOTES);
         Response response = (Response) res.getNote(ADAPTER_NOTES);
 
         if (request == null) {
@@ -452,7 +456,9 @@ public class CoyoteAdapter implements Adapter {
         try {
             // Parse and set Catalina and configuration specific
             // request parameters
-            // 在真正把request和response交给容器处理之前，在进行一些操作
+            /**
+             * 在真正把request和response交给容器处理之前，在进行一些操作
+             */
             postParseSuccess = postParseRequest(req, request, res, response);
             if (postParseSuccess) {
                 //check valves if we support async
@@ -795,7 +801,11 @@ public class CoyoteAdapter implements Adapter {
 
         while (mapRequired) {
             // This will map the the latest version by default
-            // 根据serverName和uri来设置mappingData
+            /**
+             *  根据host和uri来设置mappingData
+             *  mappingdata包含这个请求属于哪个具体的host,context,servlet信息
+             *
+             */
             connector.getMapper().map(serverName, decodedURI,
                     version, request.getMappingData());
             request.setContext((Context) request.getMappingData().context);

@@ -113,6 +113,7 @@ final class StandardEngineValve
         }
 
         // Ask this Host to process this request
+        //把请求交给Host的pipeline
         host.getPipeline().getFirst().invoke(request, response);
 
     }
