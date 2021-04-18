@@ -4,3 +4,6 @@
 catalina-home\
 .idea\
 target\
+target/
+tomcat7/target/
+/tomcat7/target/
