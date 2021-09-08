@@ -111,6 +111,10 @@ public final class LifecycleSupport {
      */
     public void fireLifecycleEvent(String type, Object data) {
 
+        /**
+         * StandardHost时，listeners = [HostConfig]
+         * StabdardEngine listeners = [EngineConfig]
+         */
         LifecycleEvent event = new LifecycleEvent(lifecycle, type, data);
         LifecycleListener interested[] = listeners;  // ContextCOnfig
         for (int i = 0; i < interested.length; i++)

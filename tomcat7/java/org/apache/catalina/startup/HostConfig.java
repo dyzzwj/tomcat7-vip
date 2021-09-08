@@ -341,6 +341,10 @@ public class HostConfig
         } else if (event.getType().equals(Lifecycle.BEFORE_START_EVENT)) {
             beforeStart();
         } else if (event.getType().equals(Lifecycle.START_EVENT)) {
+            /**
+             * 只有StandardHost   会进行deployApps
+             */
+            System.out.println(event);
             start();
         } else if (event.getType().equals(Lifecycle.STOP_EVENT)) {
             stop();
@@ -699,6 +703,9 @@ public class HostConfig
                 }
             }
 
+            /**
+             * Host添加Context
+             */
             host.addChild(context);
         } catch (Throwable t) {
             ExceptionUtils.handleThrowable(t);

@@ -443,6 +443,7 @@ public class StandardService extends LifecycleMBeanBase implements Service {
         // Start our defined Container first
         if (container != null) {
             synchronized (container) {
+                //StandardEngine
                 container.start();
             }
         }
@@ -545,6 +546,7 @@ public class StandardService extends LifecycleMBeanBase implements Service {
 
         // 将Service下的容器进行初始化，默认情况下是StandardEngine
         if (container != null) {
+            //StandardEngine
             container.init();   // 注意：这里是Engine，这个流程只会初始化StandardEngine，并没有去初始话Engine下的Host，那么Host是在哪初始化的呢？
                                 // 实际上，对于Host容器，并不需要进行初始化
         }

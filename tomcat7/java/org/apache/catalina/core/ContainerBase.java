@@ -1245,8 +1245,13 @@ public abstract class ContainerBase extends LifecycleMBeanBase
             ((Lifecycle) resources).start();
 
         // Start our child containers, if any
+        //
         // 如果在server.xml中配置了<Context/>节点，那么对于Host节点就存在children，这个时候就会启动context, 并且是通过异步启动的
+
+        //StandardEngine  ->  StandardHost -> StandardWrapper
         Container children[] = findChildren();
+        System.out.print("===========");
+        System.out.println(children.length > 0 ? children[0].getClass().getSimpleName() : "");
         List<Future<Void>> results = new ArrayList<Future<Void>>();
         for (int i = 0; i < children.length; i++) {
             results.add(startStopExecutor.submit(new StartChild(children[i])));
@@ -1276,7 +1281,9 @@ public abstract class ContainerBase extends LifecycleMBeanBase
             ((Lifecycle) pipeline).start();
         }
 
-        // 这个时候会触发START_EVENT事件，会进行deployApps
+        /**
+         *  当前对象为StandardHost  这个时候会触发START_EVENT事件，会进行deployApps
+         */
         setState(LifecycleState.STARTING);
 
         // Start our thread

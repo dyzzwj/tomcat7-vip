@@ -105,6 +105,7 @@ public final class Bootstrap {
     private ClassLoader createClassLoader(String name, ClassLoader parent)
         throws Exception {
 
+        //获取catalina.properties配置文件里的配置项
         String value = CatalinaProperties.getProperty(name + ".loader");
         if ((value == null) || (value.equals("")))
             return parent;
@@ -252,6 +253,9 @@ public final class Bootstrap {
         //执行Catalina.setParentClassLoader
         method.invoke(startupInstance, paramValues);
 
+        /**
+         * catalinaDaemon赋值为Catalina
+         */
         catalinaDaemon = startupInstance;
 
     }
@@ -281,7 +285,9 @@ public final class Bootstrap {
             catalinaDaemon.getClass().getMethod(methodName, paramTypes);
         if (log.isDebugEnabled())
             log.debug("Calling startup class " + method);
-        //Catalina.load()
+        /**
+         * 执行Catalina.load()
+         */
         method.invoke(catalinaDaemon, param);
 
     }
@@ -323,6 +329,7 @@ public final class Bootstrap {
         if( catalinaDaemon==null ) init();
 
         Method method = catalinaDaemon.getClass().getMethod("start", (Class [] )null);
+        //执行Catalina.start
         method.invoke(catalinaDaemon, (Object [])null);
 
     }
@@ -478,6 +485,9 @@ public final class Bootstrap {
                  * Catalina.load()
                  */
                 daemon.load(args);
+                /**
+                 * Catalina.start
+                 */
                 daemon.start();
                 if (null == daemon.getServer()) {
                     System.exit(1);

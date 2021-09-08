@@ -46,6 +46,8 @@ public class CatalinaProperties {
     private static Properties properties = null;
 
 
+
+    //加载配置文件catalina.properties
     static {
 
         loadProperties();

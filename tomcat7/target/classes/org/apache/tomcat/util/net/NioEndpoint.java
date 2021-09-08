@@ -1825,8 +1825,8 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
                     doRun(key, ka);
                 }
             } else {
-                // 在nio中，每产生一个就绪的io事件，就会通过一个线程来处理该事件，需要进行同步
-                // 意思是，多个线程只能并发处理不同socket,不能处理同一个socket
+                // 在nio中，每产生一个就绪的io事件，就会通过一个线程来处理该事件，因此需要进行同步
+                // 意思是，多个线程只能并发处理不同socket,线性处理同一个socket，不能同时处理同一个socket
                 synchronized (socket) {
                     // 真正处理事件的逻辑
                     doRun(key, ka);

@@ -821,10 +821,7 @@ public class StandardWrapper extends ContainerBase
      * <code>SingleThreadModel</code>, the Wrapper implementation must ensure
      * that this instance is not allocated again until it is deallocated by a
      * call to <code>deallocate()</code>.
-     *
-     * @exception ServletException if the servlet init() method threw
-     *  an exception
-     * @exception ServletException if a loading error occurs
+
      *
      * 分配一个已经初始化好的Servlet实例。
      * 如果Servlet没有实现SingleThreadModel接口，已经被初始化好的实例可以被立即返回
@@ -872,6 +869,9 @@ public class StandardWrapper extends ContainerBase
                         }
                     }
                     if (!instanceInitialized) {
+                        /**
+                         * Servlet的生命周期方法init()
+                         */
                         initServlet(instance);
                     }
                 }
@@ -919,7 +919,7 @@ public class StandardWrapper extends ContainerBase
                         throw new ServletException(sm.getString("standardWrapper.allocate"), e);
                     }
                 } else {
-                    // 否则等等
+                    // 否则等等 等待其他占用池子中实例的请求执行完成后调用StandardWrapper.deallocate唤醒当前线程 
                     try {
                         instancePool.wait();
                     } catch (InterruptedException e) {
