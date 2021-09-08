@@ -1280,7 +1280,7 @@ public abstract class ContainerBase extends LifecycleMBeanBase
         setState(LifecycleState.STARTING);
 
         // Start our thread
-        // Engine容器启动一个background线程
+        // 只有Engine容器启动一个background线程
         threadStart();
     }
 
@@ -1670,12 +1670,16 @@ public abstract class ContainerBase extends LifecycleMBeanBase
             try {
                 while (!threadDone) {
                     try {
+                        /**
+                         *  StandardEngine：backgroundProcessorDelay = 10
+                         *  每10s执行一次
+                         */
                         Thread.sleep(backgroundProcessorDelay * 1000L);
                     } catch (InterruptedException e) {
                         // Ignore
                     }
                     if (!threadDone) {
-                        // 获取当前的容器
+                        // 获取当前的容器 StandardEngine
                         Container parent = (Container) getMappingObject();
                         ClassLoader cl =
                             Thread.currentThread().getContextClassLoader();

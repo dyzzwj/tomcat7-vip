@@ -4,4 +4,12 @@
 catalina-home\
 .idea\
 target\
+<<<<<<< HEAD
 tomcat.iml
+=======
+target/
+tomcat7/target/
+/tomcat7/target/
+>>>>>>> 75de30a27fe39910395a2c9afd963d3c4ee65fbc
+.idea\
+logs\

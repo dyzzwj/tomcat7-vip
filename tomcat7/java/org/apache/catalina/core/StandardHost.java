@@ -802,7 +802,7 @@ public class StandardHost extends ContainerBase implements Host {
      *  that prevents this component from being used
      */
     @Override
-    protected synchronized void startInternal() throws LifecycleException {
+    protected synchronized void  startInternal() throws LifecycleException {
 
         // Set error report valve
         String errorValve = getErrorReportValveClass();

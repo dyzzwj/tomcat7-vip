@@ -198,6 +198,7 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
                 // Loop if endpoint is paused
                 // 如果Endpoint仍然在运行，但是被暂停了，那么就无限循环，从而不能接受请求
                 while (paused && running) {
+                    //热加载 热部署时 paused为true
                     state = AcceptorState.PAUSED;
                     try {
                         Thread.sleep(50);

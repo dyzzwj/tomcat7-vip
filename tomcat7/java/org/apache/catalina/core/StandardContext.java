@@ -5613,7 +5613,10 @@ public class StandardContext extends ContainerBase
                 // Start our subordinate components, if any
                 Loader loader = getLoaderInternal(); // 获取Context的类加载器
                 if ((loader != null) && (loader instanceof Lifecycle))
-                    ((Lifecycle) loader).start();   // 启动类加载器，包括初始话DirContext
+                /**
+                 * 启动类加载器，包括初始话DirContext
+                 */
+                 ((Lifecycle) loader).start();
 
                 // since the loader just started, the webapp classloader is now
                 // created.
@@ -5657,7 +5660,11 @@ public class StandardContext extends ContainerBase
                     ((Lifecycle) pipeline).start();
                 }
 
-                // Acquire clustered manager
+
+             /**
+              * 处理session
+              */
+             // Acquire clustered manager
                 Manager contextManager = null;
                 Manager manager = getManagerInternal();
                 if (manager == null) {
@@ -5741,7 +5748,12 @@ public class StandardContext extends ContainerBase
             // Set up the context init params
             mergeParameters();
 
-            // Call ServletContainerInitializers
+         /**
+          * servlet3.0规范   属于javaspi
+          *  springboot外部tomcat启动原理基于此规范  Tomcat在此处实现了这个规范
+          *
+          */
+         // Call ServletContainerInitializers
             for (Map.Entry<ServletContainerInitializer, Set<Class<?>>> entry :
                 initializers.entrySet()) {
                 try {

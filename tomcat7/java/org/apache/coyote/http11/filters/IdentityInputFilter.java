@@ -144,7 +144,8 @@ public class IdentityInputFilter implements InputFilter {
                  * 此时buffer中的数据被读完了(pos 等于 lastValid) 此时就可以根据ByteChunk读取buffer中的数据
                  * nRead表示读到了多少了数据
                  */
-                //InputSteamInputBuffer
+                //InputSteamInputBuffer == bio
+                //InternalNioInputBuffer.SocketInputBuffer.doRead  == nio
                 int nRead = buffer.doRead(chunk, req); // 20
 
                 // 如果读到的数据超过了剩余部分，那么将chunk的标记缩小，缩小为剩余部分的最后一个位置，多余数据不属于请求体了

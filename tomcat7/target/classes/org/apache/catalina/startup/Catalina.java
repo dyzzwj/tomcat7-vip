@@ -578,7 +578,9 @@ public class Catalina {
         initNaming();
 
         // Create and execute our Digester
-        // 初始化server.xml文件解析器
+        /**
+         * 初始化server.xml文件解析器 定义解析规则
+         */
         Digester digester = createStartDigester();
 
         InputSource inputSource = null;
@@ -649,6 +651,9 @@ public class Catalina {
                 // 解析server.xml或server-embed.xml文件
                 inputSource.setByteStream(inputStream);
                 digester.push(this);
+                /**
+                 * 根据createStartDigester定义的解析规则去真正解析server.xml
+                 */
                 digester.parse(inputSource);
             } catch (SAXParseException spe) {
                 log.warn("Catalina.start using " + getConfigFile() + ": " +

@@ -1344,7 +1344,9 @@ public class ContextConfig implements LifecycleListener {
 
             // Step 9. Apply merged web.xml to Context
             if (ok) {
-                //
+                /**
+                 * 把解析出来的servlet、filter设置到Context中
+                 */
                 webXml.configureContext(context);
             }
         } else {

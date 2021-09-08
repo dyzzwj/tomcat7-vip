@@ -171,6 +171,9 @@ public class NioSelectorPool {
     public int write(ByteBuffer buf, NioChannel socket, Selector selector,
                      long writeTimeout, boolean block) throws IOException {
         if ( SHARED && block ) {
+            /**
+             * 走这里
+             */
             return blockingSelector.write(buf,socket,writeTimeout);
         }
         SelectionKey key = null;
@@ -252,6 +255,9 @@ public class NioSelectorPool {
      */
     public int read(ByteBuffer buf, NioChannel socket, Selector selector, long readTimeout, boolean block) throws IOException {
         if ( SHARED && block ) {
+            /**
+             * 走这里
+             */
             return blockingSelector.read(buf,socket,readTimeout);
         }
         SelectionKey key = null;

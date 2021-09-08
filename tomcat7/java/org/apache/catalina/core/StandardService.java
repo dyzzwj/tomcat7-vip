@@ -443,6 +443,7 @@ public class StandardService extends LifecycleMBeanBase implements Service {
         // Start our defined Container first
         if (container != null) {
             synchronized (container) {
+                //StandardEngine
                 container.start();
             }
         }

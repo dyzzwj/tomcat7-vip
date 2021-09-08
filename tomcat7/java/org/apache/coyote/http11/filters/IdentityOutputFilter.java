@@ -85,7 +85,8 @@ public class IdentityOutputFilter implements OutputFilter {
                 } else {
                     remaining = remaining - result;
                 }
-                //OutputStreamOutputBuffer.doWrite
+                //bio -> OutputStreamOutputBuffer.doWrite
+                //nio -> InternalNioOutputBuffer.SocketOutputBuffer.doWrite
                 buffer.doWrite(chunk, res);
             } else {
                 // No more bytes left to be written : return -1 and clear the
