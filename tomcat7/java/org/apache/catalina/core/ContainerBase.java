@@ -1222,7 +1222,7 @@ public abstract class ContainerBase extends LifecycleMBeanBase
         // Start our subordinate components, if any
         // 启动下级组件，如果有的话
 
-        // 容器的类加载器
+        // 容器的类加载器 为null
         Loader loader = getLoaderInternal();
         if ((loader != null) && (loader instanceof Lifecycle))
             ((Lifecycle) loader).start();

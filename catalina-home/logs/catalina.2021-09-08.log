@@ -1,0 +1,276 @@
+Sep 08, 2021 5:47:38 PM org.apache.catalina.startup.ClassLoaderFactory validateFile
+WARNING: Problem with directory [E:\gitrepo\tomcat7-vip\catalina-home\lib], exists: [false], isDirectory: [false], canRead: [false]
+Sep 08, 2021 5:47:38 PM org.apache.catalina.startup.ClassLoaderFactory validateFile
+WARNING: Problem with directory [E:\gitrepo\tomcat7-vip\catalina-home\lib], exists: [false], isDirectory: [false], canRead: [false]
+Sep 08, 2021 5:47:38 PM org.apache.catalina.startup.ClassLoaderFactory validateFile
+WARNING: Problem with directory [E:\gitrepo\tomcat7-vip\catalina-home\lib], exists: [false], isDirectory: [false], canRead: [false]
+Sep 08, 2021 5:47:38 PM org.apache.catalina.startup.ClassLoaderFactory validateFile
+WARNING: Problem with directory [E:\gitrepo\tomcat7-vip\catalina-home\lib], exists: [false], isDirectory: [false], canRead: [false]
+Sep 08, 2021 5:47:39 PM org.apache.catalina.startup.Catalina initDirs
+SEVERE: Cannot find specified temporary folder at [catalina-home/temp]
+Sep 08, 2021 5:47:40 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Server version name:   Apache Tomcat/@VERSION@
+Sep 08, 2021 5:47:40 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Server built:          @VERSION_BUILT@
+Sep 08, 2021 5:47:40 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Server version number: @VERSION_NUMBER@
+Sep 08, 2021 5:47:40 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: OS Name:               Windows 10
+Sep 08, 2021 5:47:40 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: OS Version:            10.0
+Sep 08, 2021 5:47:40 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Architecture:          x86
+Sep 08, 2021 5:47:40 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Java Home:             D:\Program Files (x86)\Java\jdk1.8.0_261\jre
+Sep 08, 2021 5:47:40 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: JVM Version:           1.8.0_261-b12
+Sep 08, 2021 5:47:41 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: JVM Vendor:            Oracle Corporation
+Sep 08, 2021 5:47:41 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: CATALINA_BASE:         E:\gitrepo\tomcat7-vip\catalina-home
+Sep 08, 2021 5:47:41 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: CATALINA_HOME:         E:\gitrepo\tomcat7-vip\catalina-home
+Sep 08, 2021 5:47:41 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:11135,suspend=y,server=n
+Sep 08, 2021 5:47:41 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dcatalina.home=catalina-home
+Sep 08, 2021 5:47:41 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dcatalina.base=catalina-home
+Sep 08, 2021 5:47:41 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Djava.endorsed.dirs=catalina-home/endorsed
+Sep 08, 2021 5:47:41 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Djava.io.tmpdir=catalina-home/temp
+Sep 08, 2021 5:47:41 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+Sep 08, 2021 5:47:41 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Djava.util.logging.config.file=catalina-home/conf/logging.properties
+Sep 08, 2021 5:47:41 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Duser.language=
+Sep 08, 2021 5:47:41 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -javaagent:C:\Users\ASUS\.IntelliJIdea2019.3\system\captureAgent\debugger-agent.jar
+Sep 08, 2021 5:47:41 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dfile.encoding=UTF-8
+Sep 08, 2021 5:47:41 PM org.apache.catalina.core.AprLifecycleListener lifecycleEvent
+INFO: The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Program Files (x86)\Java\jdk1.8.0_261\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;D:\Program Files (x86)\VMware\VMware Workstation\bin\;c:\gtk\bin;D:\Program Files (x86)\Python37-32\Scripts\;D:\Program Files (x86)\Python37-32\;E:\app\ASUS\product\11.2.0\dbhome_3\bin;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\software\MySQL Server 5.5\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\ManagementStudio\;C:\Program Files (x86)\Microsoft SQL Server\120\DTS\Binn\;D:\bigdata\findbugs-3.0.1\bin;D:\bigdata\protobuf-2.5.0\src;D:\bigdata\cmake-3.6.1-win64-x64\bin;D:\cygwin\bin;D:\bigdata\zlib;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;D:\bigdata\apache-ant-1.9.11\bin;D:\hadoop-2.6.5\bin;C:\WINDOWS\System32\OpenSSH\;C:\Users\ASUS\AppData\Local\Microsoft\WindowsApps;D:\Program Files\JetBrains\IntelliJ IDEA 2018.3\bin;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;D:\Program Files\Git\cmd;D:\gradle-4.9\bin;D:\Java\jdk1.8.0_261\bin;D:\apache-maven-3.6.3-bin\bin;D:\Chrome\apache-ant-1.10.7-bin\bin;E:\Program Files (x86)\NetSarang\Xftp 7\;D:\Program Files (x86)\scala\bin;C:\Program Files\MySQL\MySQL Server 5.7\bin;D:\Program Files\nodejs\;D:\Program Files\Redis\;C:\Users\ASUS\AppData\Local\Microsoft\WindowsApps;D:\Program Files\JetBrains\IntelliJ IDEA 2019.1.4\bin;C:\Users\ASUS\AppData\Local\BypassRuntm;D:\Program Files\JetBrains\IntelliJ IDEA 2019.3.5\bin;;D:\Program Files\JetBrains\DataGrip 2020.3.1\bin;;C:\Users\ASUS\AppData\Local\Microsoft\WindowsApps;C:\Users\ASUS\AppData\Roaming\npm;D:\Program Files\JetBrains\PyCharm 2021.1.1\bin;;.]
+Sep 08, 2021 5:47:41 PM org.apache.coyote.AbstractProtocol init
+INFO: Initializing ProtocolHandler ["http-nio-8080"]
+Sep 08, 2021 5:47:42 PM org.apache.tomcat.util.net.NioSelectorPool getSharedSelector
+INFO: Using a shared selector for servlet write/read
+Sep 08, 2021 5:47:42 PM org.apache.coyote.AbstractProtocol init
+INFO: Initializing ProtocolHandler ["ajp-bio-8009"]
+Sep 08, 2021 5:47:42 PM org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 3403 ms
+Sep 08, 2021 5:47:45 PM org.apache.catalina.core.StandardService startInternal
+INFO: Starting service [Catalina]
+Sep 08, 2021 5:47:46 PM org.apache.catalina.core.StandardEngine startInternal
+INFO: Starting Servlet Engine: Apache Tomcat/@VERSION@
+Sep 08, 2021 5:47:46 PM org.apache.catalina.startup.HostConfig deployDescriptor
+INFO: Deploying deployment descriptor [E:\gitrepo\tomcat7-vip\catalina-home\conf\Catalina\localhost\Hello##2.xml]
+Sep 08, 2021 5:47:48 PM org.apache.catalina.startup.TldConfig execute
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+Sep 08, 2021 5:47:48 PM org.apache.catalina.startup.HostConfig deployDescriptor
+INFO: Deployment of deployment descriptor [E:\gitrepo\tomcat7-vip\catalina-home\conf\Catalina\localhost\Hello##2.xml] has finished in [2,870] ms
+Sep 08, 2021 5:47:48 PM org.apache.catalina.startup.HostConfig deployDescriptor
+INFO: Deploying deployment descriptor [E:\gitrepo\tomcat7-vip\catalina-home\conf\Catalina\localhost\Hello##3.xml]
+Sep 08, 2021 5:47:50 PM org.apache.catalina.startup.TldConfig execute
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+Sep 08, 2021 5:47:50 PM org.apache.catalina.startup.HostConfig deployDescriptor
+INFO: Deployment of deployment descriptor [E:\gitrepo\tomcat7-vip\catalina-home\conf\Catalina\localhost\Hello##3.xml] has finished in [1,162] ms
+Sep 08, 2021 5:47:50 PM org.apache.catalina.startup.HostConfig deployWAR
+INFO: Deploying web application archive [E:\gitrepo\tomcat7-vip\catalina-home\webapps\demo-servlet.war]
+Sep 08, 2021 5:47:51 PM org.apache.catalina.startup.TldConfig execute
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+Sep 08, 2021 5:47:51 PM org.apache.catalina.startup.HostConfig deployWAR
+INFO: Deployment of web application archive [E:\gitrepo\tomcat7-vip\catalina-home\webapps\demo-servlet.war] has finished in [1,178] ms
+Sep 08, 2021 5:47:51 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\docs]
+Sep 08, 2021 5:47:51 PM org.apache.catalina.startup.TldConfig execute
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+Sep 08, 2021 5:47:51 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deployment of web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\docs] has finished in [95] ms
+Sep 08, 2021 5:47:51 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\examples]
+Sep 08, 2021 5:47:51 PM org.apache.catalina.startup.TldConfig execute
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+Sep 08, 2021 5:47:51 PM org.apache.catalina.core.StandardContext startInternal
+SEVERE: One or more listeners failed to start. Full details will be found in the appropriate container log file
+Sep 08, 2021 5:47:51 PM org.apache.catalina.core.StandardContext startInternal
+SEVERE: Context [/examples] startup failed due to previous errors
+Sep 08, 2021 5:47:51 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deployment of web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\examples] has finished in [252] ms
+Sep 08, 2021 5:47:51 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\host-manager]
+Sep 08, 2021 5:47:51 PM org.apache.catalina.startup.TldConfig execute
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+Sep 08, 2021 5:47:51 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deployment of web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\host-manager] has finished in [138] ms
+Sep 08, 2021 5:47:51 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\manager]
+Sep 08, 2021 5:47:51 PM org.apache.catalina.startup.TldConfig execute
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+Sep 08, 2021 5:47:51 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deployment of web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\manager] has finished in [113] ms
+Sep 08, 2021 5:47:51 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\ROOT]
+Sep 08, 2021 5:47:52 PM org.apache.catalina.startup.TldConfig execute
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+Sep 08, 2021 5:47:52 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deployment of web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\ROOT] has finished in [97] ms
+Sep 08, 2021 5:47:52 PM org.apache.coyote.AbstractProtocol start
+INFO: Starting ProtocolHandler ["http-nio-8080"]
+Sep 08, 2021 5:47:52 PM org.apache.coyote.AbstractProtocol start
+INFO: Starting ProtocolHandler ["ajp-bio-8009"]
+Sep 08, 2021 5:47:52 PM org.apache.catalina.startup.Catalina start
+INFO: Server startup in 9563 ms
+Sep 08, 2021 5:48:10 PM org.apache.coyote.AbstractProtocol pause
+INFO: Pausing ProtocolHandler ["http-nio-8080"]
+Sep 08, 2021 5:48:10 PM org.apache.coyote.AbstractProtocol pause
+INFO: Pausing ProtocolHandler ["ajp-bio-8009"]
+Sep 08, 2021 5:48:10 PM org.apache.catalina.core.StandardService stopInternal
+INFO: Stopping service [Catalina]
+Sep 08, 2021 5:48:10 PM org.apache.coyote.AbstractProtocol stop
+INFO: Stopping ProtocolHandler ["http-nio-8080"]
+Sep 08, 2021 5:48:10 PM org.apache.coyote.AbstractProtocol stop
+INFO: Stopping ProtocolHandler ["ajp-bio-8009"]
+Sep 08, 2021 5:48:10 PM org.apache.coyote.AbstractProtocol destroy
+INFO: Destroying ProtocolHandler ["http-nio-8080"]
+Sep 08, 2021 5:48:10 PM org.apache.coyote.AbstractProtocol destroy
+INFO: Destroying ProtocolHandler ["ajp-bio-8009"]
+Sep 08, 2021 5:48:12 PM org.apache.catalina.startup.ClassLoaderFactory validateFile
+WARNING: Problem with directory [E:\gitrepo\tomcat7-vip\catalina-home\lib], exists: [false], isDirectory: [false], canRead: [false]
+Sep 08, 2021 5:48:12 PM org.apache.catalina.startup.ClassLoaderFactory validateFile
+WARNING: Problem with directory [E:\gitrepo\tomcat7-vip\catalina-home\lib], exists: [false], isDirectory: [false], canRead: [false]
+Sep 08, 2021 5:48:12 PM org.apache.catalina.startup.ClassLoaderFactory validateFile
+WARNING: Problem with directory [E:\gitrepo\tomcat7-vip\catalina-home\lib], exists: [false], isDirectory: [false], canRead: [false]
+Sep 08, 2021 5:48:12 PM org.apache.catalina.startup.ClassLoaderFactory validateFile
+WARNING: Problem with directory [E:\gitrepo\tomcat7-vip\catalina-home\lib], exists: [false], isDirectory: [false], canRead: [false]
+Sep 08, 2021 5:48:12 PM org.apache.catalina.startup.Catalina initDirs
+SEVERE: Cannot find specified temporary folder at [catalina-home/temp]
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Server version name:   Apache Tomcat/@VERSION@
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Server built:          @VERSION_BUILT@
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Server version number: @VERSION_NUMBER@
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: OS Name:               Windows 10
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: OS Version:            10.0
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Architecture:          x86
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Java Home:             D:\Program Files (x86)\Java\jdk1.8.0_261\jre
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: JVM Version:           1.8.0_261-b12
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: JVM Vendor:            Oracle Corporation
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: CATALINA_BASE:         E:\gitrepo\tomcat7-vip\catalina-home
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: CATALINA_HOME:         E:\gitrepo\tomcat7-vip\catalina-home
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:24795,suspend=y,server=n
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dcatalina.home=catalina-home
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dcatalina.base=catalina-home
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Djava.endorsed.dirs=catalina-home/endorsed
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Djava.io.tmpdir=catalina-home/temp
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Djava.util.logging.config.file=catalina-home/conf/logging.properties
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Duser.language=
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -javaagent:C:\Users\ASUS\.IntelliJIdea2019.3\system\captureAgent\debugger-agent.jar
+Sep 08, 2021 5:48:15 PM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dfile.encoding=UTF-8
+Sep 08, 2021 5:48:15 PM org.apache.catalina.core.AprLifecycleListener lifecycleEvent
+INFO: The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Program Files (x86)\Java\jdk1.8.0_261\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;D:\Program Files (x86)\VMware\VMware Workstation\bin\;c:\gtk\bin;D:\Program Files (x86)\Python37-32\Scripts\;D:\Program Files (x86)\Python37-32\;E:\app\ASUS\product\11.2.0\dbhome_3\bin;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\software\MySQL Server 5.5\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\ManagementStudio\;C:\Program Files (x86)\Microsoft SQL Server\120\DTS\Binn\;D:\bigdata\findbugs-3.0.1\bin;D:\bigdata\protobuf-2.5.0\src;D:\bigdata\cmake-3.6.1-win64-x64\bin;D:\cygwin\bin;D:\bigdata\zlib;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;D:\bigdata\apache-ant-1.9.11\bin;D:\hadoop-2.6.5\bin;C:\WINDOWS\System32\OpenSSH\;C:\Users\ASUS\AppData\Local\Microsoft\WindowsApps;D:\Program Files\JetBrains\IntelliJ IDEA 2018.3\bin;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;D:\Program Files\Git\cmd;D:\gradle-4.9\bin;D:\Java\jdk1.8.0_261\bin;D:\apache-maven-3.6.3-bin\bin;D:\Chrome\apache-ant-1.10.7-bin\bin;E:\Program Files (x86)\NetSarang\Xftp 7\;D:\Program Files (x86)\scala\bin;C:\Program Files\MySQL\MySQL Server 5.7\bin;D:\Program Files\nodejs\;D:\Program Files\Redis\;C:\Users\ASUS\AppData\Local\Microsoft\WindowsApps;D:\Program Files\JetBrains\IntelliJ IDEA 2019.1.4\bin;C:\Users\ASUS\AppData\Local\BypassRuntm;D:\Program Files\JetBrains\IntelliJ IDEA 2019.3.5\bin;;D:\Program Files\JetBrains\DataGrip 2020.3.1\bin;;C:\Users\ASUS\AppData\Local\Microsoft\WindowsApps;C:\Users\ASUS\AppData\Roaming\npm;D:\Program Files\JetBrains\PyCharm 2021.1.1\bin;;.]
+Sep 08, 2021 5:48:16 PM org.apache.coyote.AbstractProtocol init
+INFO: Initializing ProtocolHandler ["http-nio-8080"]
+Sep 08, 2021 5:48:17 PM org.apache.tomcat.util.net.NioSelectorPool getSharedSelector
+INFO: Using a shared selector for servlet write/read
+Sep 08, 2021 5:48:17 PM org.apache.coyote.AbstractProtocol init
+INFO: Initializing ProtocolHandler ["ajp-bio-8009"]
+Sep 08, 2021 5:48:17 PM org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 4762 ms
+Sep 08, 2021 5:48:30 PM org.apache.catalina.core.StandardService startInternal
+INFO: Starting service [Catalina]
+Sep 08, 2021 5:48:30 PM org.apache.catalina.core.StandardEngine startInternal
+INFO: Starting Servlet Engine: Apache Tomcat/@VERSION@
+Sep 08, 2021 5:48:50 PM org.apache.catalina.startup.HostConfig deployDescriptor
+INFO: Deploying deployment descriptor [E:\gitrepo\tomcat7-vip\catalina-home\conf\Catalina\localhost\Hello##2.xml]
+Sep 08, 2021 6:01:58 PM org.apache.catalina.startup.TldConfig execute
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+Sep 08, 2021 6:01:58 PM org.apache.catalina.startup.HostConfig deployDescriptor
+INFO: Deployment of deployment descriptor [E:\gitrepo\tomcat7-vip\catalina-home\conf\Catalina\localhost\Hello##2.xml] has finished in [787,247] ms
+Sep 08, 2021 6:01:58 PM org.apache.catalina.startup.HostConfig deployDescriptor
+INFO: Deploying deployment descriptor [E:\gitrepo\tomcat7-vip\catalina-home\conf\Catalina\localhost\Hello##3.xml]
+Sep 08, 2021 6:02:05 PM org.apache.catalina.startup.TldConfig execute
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+Sep 08, 2021 6:02:05 PM org.apache.catalina.startup.HostConfig deployDescriptor
+INFO: Deployment of deployment descriptor [E:\gitrepo\tomcat7-vip\catalina-home\conf\Catalina\localhost\Hello##3.xml] has finished in [7,340] ms
+Sep 08, 2021 6:02:05 PM org.apache.catalina.startup.HostConfig deployWAR
+INFO: Deploying web application archive [E:\gitrepo\tomcat7-vip\catalina-home\webapps\demo-servlet.war]
+Sep 08, 2021 6:02:12 PM org.apache.catalina.startup.TldConfig execute
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+Sep 08, 2021 6:02:12 PM org.apache.catalina.startup.HostConfig deployWAR
+INFO: Deployment of web application archive [E:\gitrepo\tomcat7-vip\catalina-home\webapps\demo-servlet.war] has finished in [6,934] ms
+Sep 08, 2021 6:02:12 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\docs]
+Sep 08, 2021 6:02:14 PM org.apache.catalina.startup.TldConfig execute
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+Sep 08, 2021 6:02:14 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deployment of web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\docs] has finished in [2,477] ms
+Sep 08, 2021 6:02:14 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\examples]
+Sep 08, 2021 6:02:21 PM org.apache.catalina.startup.TldConfig execute
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+Sep 08, 2021 6:02:21 PM org.apache.catalina.core.StandardContext startInternal
+SEVERE: One or more listeners failed to start. Full details will be found in the appropriate container log file
+Sep 08, 2021 6:02:21 PM org.apache.catalina.core.StandardContext startInternal
+SEVERE: Context [/examples] startup failed due to previous errors
+Sep 08, 2021 6:02:21 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deployment of web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\examples] has finished in [6,580] ms
+Sep 08, 2021 6:02:21 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\host-manager]
+Sep 08, 2021 6:02:24 PM org.apache.catalina.startup.TldConfig execute
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+Sep 08, 2021 6:02:24 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deployment of web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\host-manager] has finished in [3,384] ms
+Sep 08, 2021 6:02:24 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\manager]
+Sep 08, 2021 6:02:27 PM org.apache.catalina.startup.TldConfig execute
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+Sep 08, 2021 6:02:27 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deployment of web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\manager] has finished in [2,320] ms
+Sep 08, 2021 6:02:27 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\ROOT]
+Sep 08, 2021 6:02:28 PM org.apache.catalina.startup.TldConfig execute
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+Sep 08, 2021 6:02:28 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deployment of web application directory [E:\gitrepo\tomcat7-vip\catalina-home\webapps\ROOT] has finished in [1,301] ms
+Sep 08, 2021 6:02:28 PM org.apache.coyote.AbstractProtocol start
+INFO: Starting ProtocolHandler ["http-nio-8080"]
+Sep 08, 2021 6:02:28 PM org.apache.coyote.AbstractProtocol start
+INFO: Starting ProtocolHandler ["ajp-bio-8009"]
+Sep 08, 2021 6:02:28 PM org.apache.catalina.startup.Catalina start
+INFO: Server startup in 851225 ms
+Sep 08, 2021 6:03:07 PM org.apache.coyote.AbstractProtocol pause
+INFO: Pausing ProtocolHandler ["http-nio-8080"]
+Sep 08, 2021 6:03:07 PM org.apache.coyote.AbstractProtocol pause
+INFO: Pausing ProtocolHandler ["ajp-bio-8009"]
+Sep 08, 2021 6:03:07 PM org.apache.catalina.core.StandardService stopInternal
+INFO: Stopping service [Catalina]
+Sep 08, 2021 6:03:07 PM org.apache.coyote.AbstractProtocol stop
+INFO: Stopping ProtocolHandler ["http-nio-8080"]
+Sep 08, 2021 6:03:07 PM org.apache.coyote.AbstractProtocol stop
+INFO: Stopping ProtocolHandler ["ajp-bio-8009"]
+Sep 08, 2021 6:03:07 PM org.apache.coyote.AbstractProtocol destroy
+INFO: Destroying ProtocolHandler ["http-nio-8080"]
+Sep 08, 2021 6:03:07 PM org.apache.coyote.AbstractProtocol destroy
+INFO: Destroying ProtocolHandler ["ajp-bio-8009"]
