@@ -114,6 +114,7 @@ public final class LifecycleSupport {
         /**
          * StandardHost时，listeners = [HostConfig]
          * StabdardEngine listeners = [EngineConfig]
+         * StandardContext , listeners = [ContextConfig]
          */
         LifecycleEvent event = new LifecycleEvent(lifecycle, type, data);
         LifecycleListener interested[] = listeners;  // ContextCOnfig

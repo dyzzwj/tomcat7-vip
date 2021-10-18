@@ -197,6 +197,9 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
 
                 // Loop if endpoint is paused
                 // 如果Endpoint仍然在运行，但是被暂停了，那么就无限循环，从而不能接受请求
+                /**
+                 * 优雅停机：Connector.pause()  让tomcat不在接受新的请求，将存量请求处理完毕后再关闭进程
+                 */
                 while (paused && running) {
                     //热加载 热部署时 paused为true
                     state = AcceptorState.PAUSED;
@@ -327,6 +330,8 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
                     if ((state != SocketState.CLOSED)) {
                         // SocketState是Tomcat定义的一个状态,这个状态需要处理一下socket才能确定，因为跟客户端，跟具体的请求信息有关系
                         if (status == null) {
+                            // status表示应该读数据还是应该写数据
+                            // state表示处理完socket后socket的状态
                             state = handler.process(socket, SocketStatus.OPEN_READ);
                         } else {
                             // status表示应该读数据还是应该写数据

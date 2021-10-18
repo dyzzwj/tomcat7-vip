@@ -621,7 +621,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
                     processor = recycledProcessors.poll();
                 }
                 if (processor == null) {
-                    processor = createProcessor(); // HTTP11NIOProce
+                    processor = createProcessor(); // nio - HTTP11NIOProcessor; bio - Http11ConnectionHandler
                 }
 
                 initSsl(wrapper, processor);
@@ -660,7 +660,9 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
                     } else if (processor.isUpgrade()) {
                         state = processor.upgradeDispatch(status);
                     } else {
-                        // 大多数情况下走这个分支
+                        /**
+                         * 大多数情况下走这个分支
+                         */
                         state = processor.process(wrapper);
                     }
 

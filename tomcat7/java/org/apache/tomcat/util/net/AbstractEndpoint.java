@@ -773,6 +773,8 @@ public abstract class AbstractEndpoint<S> {
             bind();
             bindState = BindState.BOUND_ON_START;
         }
+
+        //抽象方法 需要子类重写
         startInternal();
     }
 

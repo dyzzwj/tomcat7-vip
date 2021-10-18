@@ -1000,7 +1000,7 @@ public abstract class ContainerBase extends LifecycleMBeanBase
     }
 
     /**
-     * 添加子容器到父容器中，比如把Wrapper添加到Context中
+     * 添加子容器到父容器中，比如把Wrapper添加到Context中 比如把Context添加到Host
      * @param child
      */
     private void addChildInternal(Container child) {
@@ -1023,6 +1023,7 @@ public abstract class ContainerBase extends LifecycleMBeanBase
             if ((getState().isAvailable() ||
                     LifecycleState.STARTING_PREP.equals(getState())) &&
                     startChildren) {
+                //启动Conntext或Wrapper
                 child.start();
             }
         } catch (LifecycleException e) {
