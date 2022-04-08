@@ -403,6 +403,9 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
         if (acceptorThreadCount == 0) {
             acceptorThreadCount = 1;
         }
+        /**
+         * 在JioEndPoint的构造方法中 设置maxConnections为0
+         */
         // Initialize maxConnections
         if (getMaxConnections() == 0) {
             // User hasn't set a value - use the default

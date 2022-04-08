@@ -953,6 +953,9 @@ public class Connector extends LifecycleMBeanBase  {
         }
 
         try {
+            /**
+             *  AbstractProtocol#init()
+             */
             protocolHandler.init();
         } catch (Exception e) {
             throw new LifecycleException(

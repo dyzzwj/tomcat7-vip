@@ -703,6 +703,9 @@ public class HostConfig
                 }
             }
 
+            /**
+             * Host添加Context
+             */
             host.addChild(context);
         } catch (Throwable t) {
             ExceptionUtils.handleThrowable(t);

@@ -753,6 +753,7 @@ public abstract class AbstractEndpoint<S> {
     public final void init() throws Exception {
         testServerCipherSuitesOrderSupport();
         if (bindOnInit) {
+            //bio模式 -> JIoEndpoint.bind
             bind();
             bindState = BindState.BOUND_ON_INIT;
         }

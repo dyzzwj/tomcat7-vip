@@ -5648,6 +5648,7 @@ public class StandardContext extends ContainerBase
                 // Context下是Wrapper，这些Wrapper是什么时候添加进Context中的？就是上面的CONFIGURE_START_EVENT事件触发的
                 // 如果Wrapper不可用就启动，默认情况下是已经启动了的。
                 for (Container child : findChildren()) {
+                    //如果不可用，就启动
                     if (!child.getState().isAvailable()) {
                         child.start();
                     }

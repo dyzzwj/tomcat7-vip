@@ -907,6 +907,8 @@ public class Connector extends LifecycleMBeanBase  {
 
     /**
      * Pause the connector.
+     * 暂停Connector 服务不再接受新的请求
+     *
      */
     public void pause() {
         try {
@@ -951,6 +953,9 @@ public class Connector extends LifecycleMBeanBase  {
         }
 
         try {
+            /**
+             *  AbstractProtocol#init()
+             */
             protocolHandler.init();
         } catch (Exception e) {
             throw new LifecycleException(

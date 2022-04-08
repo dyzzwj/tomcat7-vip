@@ -607,7 +607,7 @@ public class HostConfig
 
                 if (isServiced(cn.getName()) || deploymentExists(cn.getName()))
                     continue;
-
+                //提交到线程池部署
                 results.add(
                         es.submit(new DeployDescriptor(this, cn, contextXml)));
             }
@@ -704,7 +704,7 @@ public class HostConfig
             }
 
             /**
-             * Host添加Context
+             *  这行代码里会启动context
              */
             host.addChild(context);
         } catch (Throwable t) {
@@ -854,6 +854,7 @@ public class HostConfig
                     continue;
                 }
 
+                //提交到线程池
                 results.add(es.submit(new DeployWar(this, cn, war)));
             }
         }
@@ -1122,6 +1123,10 @@ public class HostConfig
             context.setPath(cn.getPath());
             context.setWebappVersion(cn.getVersion());
             context.setDocBase(cn.getBaseName() + ".war");
+            /**
+             *  这行代码里会启动context
+             *  StandardHost#addChild()
+             */
             host.addChild(context);
         } catch (Throwable t) {
             ExceptionUtils.handleThrowable(t);
@@ -1187,6 +1192,7 @@ public class HostConfig
                 if (isServiced(cn.getName()) || deploymentExists(cn.getName()))
                     continue;
 
+                //提交到线程池
                 results.add(es.submit(new DeployDirectory(this, cn, dir)));
             }
         }
@@ -1291,7 +1297,10 @@ public class HostConfig
             context.setPath(cn.getPath());
             context.setWebappVersion(cn.getVersion());
             context.setDocBase(cn.getBaseName());
-            host.addChild(context); // 这行代码里会启动context
+            /**
+             *  这行代码里会启动context
+             */
+            host.addChild(context);
         } catch (Throwable t) {
             ExceptionUtils.handleThrowable(t);
             log.error(sm.getString("hostConfig.deployDir.error",
@@ -1781,6 +1790,7 @@ public class HostConfig
         }
 
         if (host.getDeployOnStartup())
+            //部署app
             deployApps();
 
     }

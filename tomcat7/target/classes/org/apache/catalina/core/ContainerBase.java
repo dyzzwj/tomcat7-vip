@@ -1000,7 +1000,7 @@ public abstract class ContainerBase extends LifecycleMBeanBase
     }
 
     /**
-     * 添加子容器到父容器中，比如把Wrapper添加到Context中
+     * 添加子容器到父容器中，比如把Wrapper添加到Context中 比如把Context添加到Host
      * @param child
      */
     private void addChildInternal(Container child) {
@@ -1023,6 +1023,7 @@ public abstract class ContainerBase extends LifecycleMBeanBase
             if ((getState().isAvailable() ||
                     LifecycleState.STARTING_PREP.equals(getState())) &&
                     startChildren) {
+                //启动Conntext或Wrapper
                 child.start();
             }
         } catch (LifecycleException e) {
@@ -1620,7 +1621,7 @@ public abstract class ContainerBase extends LifecycleMBeanBase
             return;
 
 //        System.out.println(this.getInfo() + "的backgroundProcessorDelay等于=" + backgroundProcessorDelay);
-        // 默认情况下只有Engine的backgroundProcessorDelay大于0，为10，
+        // 默认情况下只有Engine的backgroundProcessorDelay大于0，为10，   StandardEngine的构造方法中将backgroundProcessorDelay设置为10
         // 也就是说，虽然每个容器在启动的时候都会走到当前方法，但是只有Engine能继续往下面去执行
         // 但是其他容器是可以配置backgroundProcessorDelay属性的，只要配置了大于0，那么这个容器也会单独开启一个backgroundProcessor线程
 
