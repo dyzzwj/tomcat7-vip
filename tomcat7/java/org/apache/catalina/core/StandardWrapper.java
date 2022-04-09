@@ -1097,9 +1097,12 @@ public class StandardWrapper extends ContainerBase
      */
     @Override
     public synchronized void load() throws ServletException {
+
+        //加载servlet
         instance = loadServlet();
 
         if (!instanceInitialized) {
+            //一般不会执行 正常情况下在loadServlet()方法中初始化过了
             initServlet(instance);
         }
 
@@ -1156,6 +1159,9 @@ public class StandardWrapper extends ContainerBase
 
             InstanceManager instanceManager = ((StandardContext)getParent()).getInstanceManager();
             try {
+                /**
+                 * 创建servlet
+                 */
                 servlet = (Servlet) instanceManager.newInstance(servletClass);
             } catch (ClassCastException e) {
                 unavailable(null);
@@ -1245,6 +1251,9 @@ public class StandardWrapper extends ContainerBase
             instanceSupport.fireInstanceEvent(InstanceEvent.BEFORE_INIT_EVENT,
                                               servlet);
 
+            /**
+             * 回调Servlet#init()
+             */
             if( Globals.IS_SECURITY_ENABLED) {
                 boolean success = false;
                 try {

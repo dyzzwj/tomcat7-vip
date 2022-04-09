@@ -481,7 +481,7 @@ public final class Bootstrap {
                 //catalina.setAwait()
                 daemon.setAwait(true);  // 设置阻塞标志
                 /**
-                 * 解析server.xml,初始化Catalina
+                 * 解析server.xml,初始化Server
                  * Catalina.load()
                  */
                 daemon.load(args);

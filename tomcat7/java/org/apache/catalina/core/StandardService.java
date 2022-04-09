@@ -460,6 +460,9 @@ public class StandardService extends LifecycleMBeanBase implements Service {
                 try {
                     // If it has already failed, don't try and start it
                     if (connector.getState() != LifecycleState.FAILED) {
+                        /**
+                         * Connector
+                         */
                         connector.start();
                     }
                 } catch (Exception e) {
@@ -568,6 +571,7 @@ public class StandardService extends LifecycleMBeanBase implements Service {
         synchronized (connectorsLock) {
             for (Connector connector : connectors) {
                 try {
+                    //Connector
                     connector.init();
                 } catch (Exception e) {
                     String message = sm.getString(

@@ -342,7 +342,7 @@ public class HostConfig
             beforeStart();
         } else if (event.getType().equals(Lifecycle.START_EVENT)) {
             /**
-             * 只有StandardHost   会进行deployApps
+             * 只有StandardHost 是 start_event
              */
             System.out.println(event);
             start();
@@ -683,7 +683,9 @@ public class HostConfig
                     docBase = new File(appBase(), context.getDocBase());
                 }
                 // If external docBase, register .xml as redeploy first
-                // 如果docBase指定的路径不是tomcat的webapp目录，那么就表示指向的tomcat外部
+                /**
+                 * 如果docBase指定的路径不是tomcat的webapp目录，那么就表示指向的tomcat外部
+                 */
                 if (!docBase.getCanonicalPath().startsWith(
                         appBase().getAbsolutePath() + File.separator)) {
                     isExternal = true;
@@ -705,6 +707,7 @@ public class HostConfig
 
             /**
              *  这行代码里会启动context
+             *  StandardHost#addChild()
              */
             host.addChild(context);
         } catch (Throwable t) {

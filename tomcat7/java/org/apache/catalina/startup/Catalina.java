@@ -683,6 +683,7 @@ public class Catalina {
         // Start the new server
         // 解析完配置文件，开始初始化Server，而从初始化Server开始，就包括了一系列的子组件的初始化
         try {
+            //StandardServer
             getServer().init();
         } catch (LifecycleException e) {
             if (Boolean.getBoolean("org.apache.catalina.startup.EXIT_ON_INIT_FAILURE")) {

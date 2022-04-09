@@ -954,7 +954,9 @@ public class Connector extends LifecycleMBeanBase  {
 
         try {
             /**
-             *  AbstractProtocol#init()
+             *  AbstractProtocol#init() 绑定端口
+             *  bio -> 创建SerevrSocket 绑定端口
+             *  nio -> 创建ServerSocketChannel 绑定端口 设置非阻塞
              */
             protocolHandler.init();
         } catch (Exception e) {
@@ -984,6 +986,9 @@ public class Connector extends LifecycleMBeanBase  {
         setState(LifecycleState.STARTING);
 
         try {
+            /**
+             * 启动endpoint
+             */
             protocolHandler.start();
         } catch (Exception e) {
             String errPrefix = "";

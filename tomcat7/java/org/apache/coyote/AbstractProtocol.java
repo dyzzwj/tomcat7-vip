@@ -451,7 +451,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
                         "abstractProtocolHandler.mbeanRegistrationFailed",
                         tpOname, getName()), e);
             }
-            rgOname=new ObjectName(domain +
+            rgOname = new ObjectName(domain +
                     ":type=GlobalRequestProcessor,name=" + getName());
             Registry.getRegistry(null, null).registerComponent(
                     getHandler().getGlobal(), rgOname, null );
@@ -461,7 +461,8 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
         endpoint.setName(endpointName.substring(1, endpointName.length()-1));
 
         try {
-            //绑定端口
+            //bio -> 创建SerevrSocket 绑定端口
+            //nio -> 创建ServerSocketChannel 绑定端口 设置非阻塞
             endpoint.init();
         } catch (Exception ex) {
             getLog().error(sm.getString("abstractProtocolHandler.initError",
@@ -477,6 +478,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
             getLog().info(sm.getString("abstractProtocolHandler.start",
                     getName()));
         try {
+            //JioEndPoint
             endpoint.start();
         } catch (Exception ex) {
             getLog().error(sm.getString("abstractProtocolHandler.startError",

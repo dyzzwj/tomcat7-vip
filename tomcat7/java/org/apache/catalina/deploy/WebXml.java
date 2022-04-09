@@ -1399,7 +1399,9 @@ public class WebXml {
         for (ContextService service : serviceRefs.values()) {
             context.getNamingResources().addService(service);
         }
-        // 遍历所有的servlet,创建wrapper
+        /**
+         *  遍历所有的servlet,创建wrapper
+         */
         for (ServletDef servlet : servlets.values()) {
             Wrapper wrapper = context.createWrapper();
             // Description is ignored
@@ -1447,10 +1449,14 @@ public class WebXml {
                         servlet.getAsyncSupported().booleanValue());
             }
             wrapper.setOverridable(servlet.isOverridable());
-            // 把wrapper添加到context中去
+            /**
+             * 把wrapper添加到context中去
+             */
             context.addChild(wrapper);
         }
-        // 把mapping关系添加到context中去
+        /**
+         *  把mapping关系添加到context中去
+         */
         for (Entry<String, String> entry : servletMappings.entrySet()) {
             context.addServletMapping(entry.getKey(), entry.getValue());
         }
@@ -1489,6 +1495,9 @@ public class WebXml {
 
         // Context doesn't use version directly
 
+        /**
+         * 欢迎页配置
+         */
         for (String welcomeFile : welcomeFiles) {
             /*
              * The following will result in a welcome file of "" so don't add
