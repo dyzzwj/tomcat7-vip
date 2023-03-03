@@ -1249,7 +1249,7 @@ public abstract class ContainerBase extends LifecycleMBeanBase
         //
         // 如果在server.xml中配置了<Context/>节点，那么对于Host节点就存在children，这个时候就会启动context, 并且是通过异步启动的
 
-        //StandardEngine  ->  StandardHost -> StandardWrapper
+        //StandardEngine  ->  StandardHost -> StandardContext -> StandardWrapper
         Container children[] = findChildren();
         System.out.print("===========");
         System.out.println(children.length > 0 ? children[0].getClass().getSimpleName() : "");

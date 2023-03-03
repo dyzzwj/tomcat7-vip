@@ -236,7 +236,7 @@ public final class Bootstrap {
 
         /**
          * 思考：这里为什么不直接调用Catelina.setParentClassLoader  而是用反射调用
-         *  因为如果直接new Catelina()  那么由于Bootatrao是AppClassLoader加载 所以如果直接new Catalina的话
+         *  因为如果直接new Catelina()  那么由于Bootatrap是AppClassLoader加载 所以如果直接new Catalina的话
          *  Catalina的类加载器就是AppClassLoader
          *
          */
@@ -482,7 +482,6 @@ public final class Bootstrap {
                 daemon.setAwait(true);  // 设置阻塞标志
                 /**
                  * 解析server.xml,初始化Server
-                 * Catalina.load()
                  */
                 daemon.load(args);
                 /**
